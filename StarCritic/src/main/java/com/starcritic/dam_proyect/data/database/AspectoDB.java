@@ -14,18 +14,35 @@ import java.util.List;
  */
 public class AspectoDB {
 
+    /**
+     * Obtener todos los aspectos existentes en la base de datos del servidor.
+     * @return todos los aspectos en formato lista.
+     */
     public static List<Aspecto> obtenerTodosLosAspectos() {
         return lista("/aspectos");
     }
 
+    /**
+     * Obtener todos los aspectos que pueda tener un contenido audiovisual.
+     * @return los aspectos de audiovisual en formato lista.
+     */
     public static List<Aspecto> obtenerAspectosAudiovisual() {
         return lista("/aspectos/audiovisual");
     }
 
+    /**
+     * Obtener todos los aspectos que pueda tener un videojuego.
+     * @return los aspectos de videojuego en formato lista.
+     */
     public static List<Aspecto> obtenerAspectosVideojuego() {
         return lista("/aspectos/videojuego");
     }
 
+    /**
+     * Obtener un aspecto a traves de su identificador en la base de datos.
+     * @param idAspecto el identificador unico del aspecto.
+     * @return el aspecto si existe, en caso contrario null.
+     */
     public static Aspecto obtenerAspecto(int idAspecto) {
         return ApiClient.get().getObject("/aspectos/" + idAspecto, Aspecto.class);
     }

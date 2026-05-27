@@ -8,12 +8,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- *
- * @author jsanbaq
+ * Punto de entrada principal de la aplicación Spring Boot del servidor StarCritic.
+ * Arranca el contexto de Spring y publica los endpoints REST de la API.
+ * @author Jesús Santos Baquero
  */
 @SpringBootApplication
 public class DAM_ProyectSpringBoot {
 
+    /**
+     * Metodo principal que arranca la aplicación Spring Boot.
+     * @param args los argumentos pasados desde la linea de comandos.
+     */
     public static void main(String[] args) {
         SpringApplication.run(DAM_ProyectSpringBoot.class, args);
     }

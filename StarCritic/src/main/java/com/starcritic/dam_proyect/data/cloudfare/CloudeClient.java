@@ -23,8 +23,10 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
 /**
- *
- * @author jsanbaq
+ * Cliente para Cloudflare R2 vía la API compatible con S3. Permite subir,
+ * descargar, generar URLs presignadas y eliminar objetos en los buckets de
+ * certificaciones y contenido local.
+ * @author Jesús Santos Baquero
  */
 public class CloudeClient {
 
@@ -102,6 +104,13 @@ public class CloudeClient {
                 .build();
     }
 
+    /**
+     * Subir un archivo al bucket configurado. El nombre del objeto se prefija
+     * con un UUID aleatorio para evitar colisiones.
+     * @param archivo el fichero a subir.
+     * @param contentType el tipo MIME del fichero (p.ej. "image/png").
+     * @return la clave (key) con la que el objeto queda almacenado en el bucket.
+     */
     public String subirArchivo(File archivo, String contentType) {
         String key = UUID.randomUUID() + "_" + archivo.getName();
         PutObjectRequest request = PutObjectRequest.builder()
@@ -114,6 +123,12 @@ public class CloudeClient {
         return key;
     }
 
+    /**
+     * Descargar un objeto del bucket a una carpeta local.
+     * @param key la clave del objeto en el bucket.
+     * @param carpetaDestino la carpeta destino donde se guardará el fichero.
+     * @return el fichero descargado.
+     */
     public File descargarArchivo(String key, String carpetaDestino) {
         File carpeta = new File(carpetaDestino);
         if (!carpeta.exists() && !carpeta.mkdirs()) {
@@ -144,7 +159,12 @@ public class CloudeClient {
         }
     }
 
-    /** URL temporal (presignada) de lectura para un objeto del bucket. */
+    /**
+     * Generar una URL temporal (presignada) de lectura para un objeto del bucket.
+     * @param key la clave del objeto en el bucket.
+     * @param minutos los minutos de validez de la URL.
+     * @return la URL presignada como cadena.
+     */
     public String urlPresignada(String key, int minutos) {
         GetObjectRequest request = GetObjectRequest.builder()
                 .bucket(bucketName)
@@ -157,6 +177,10 @@ public class CloudeClient {
         return presigner.presignGetObject(presign).url().toString();
     }
 
+    /**
+     * Eliminar un objeto del bucket.
+     * @param key la clave del objeto a eliminar.
+     */
     public void eliminarArchivo(String key) {
         try {
             DeleteObjectRequest request = DeleteObjectRequest.builder()

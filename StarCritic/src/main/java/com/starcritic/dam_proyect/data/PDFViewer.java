@@ -14,10 +14,16 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
 /**
- *
- * @author jsb
+ * Utilidad para renderizar la primera página de un PDF como imagen y poder
+ * mostrarla en un {@link JLabel}.
+ * @author Jesús Santos Baquero
  */
 public class PDFViewer {
+    /**
+     * Renderizar la primera página de un PDF a 150 DPI y devolverla como icono.
+     * @param route la ruta absoluta del fichero PDF.
+     * @return un {@link ImageIcon} con la página renderizada, o null si la lectura falla.
+     */
     public static ImageIcon getPDF(String route){
         ImageIcon image = null;
         try (PDDocument documento = Loader.loadPDF(new File(route))) {

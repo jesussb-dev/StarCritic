@@ -14,6 +14,12 @@ import java.util.Arrays;
  */
 public class RecomendacionDB {
 
+    /**
+     * Obtener los contenidos recomendados para un usuario y un tipo concreto.
+     * @param type el tipo del contenido (audiovisual o videojuego).
+     * @param idUsuario el identificador del usuario, puede ser null para recomendaciones generales.
+     * @return los contenidos recomendados envueltos en {@link DetallesRecommendedItem}.
+     */
     public DetallesRecommendedItem obtenerContenidosRecomendados(TipoContenido type, String idUsuario) {
         StringBuilder path = new StringBuilder("/recomendaciones?tipo=").append(type.toString());
         if (idUsuario != null) {

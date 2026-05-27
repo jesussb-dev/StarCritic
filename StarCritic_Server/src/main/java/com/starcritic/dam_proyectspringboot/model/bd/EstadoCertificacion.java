@@ -6,7 +6,7 @@ package com.starcritic.dam_proyectspringboot.model.bd;
 
 /**
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public enum EstadoCertificacion {
     NO_SOLICITADA("NO_SOLICITADA"),

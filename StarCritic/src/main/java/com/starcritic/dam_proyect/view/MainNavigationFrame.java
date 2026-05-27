@@ -21,8 +21,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
 /**
- *
- * @author jsb
+ * Ventana principal de la aplicación. Muestra las recomendaciones de películas,
+ * series y videojuegos y permite acceder a la búsqueda, las estadisticas y el
+ * menú de usuario.
+ * @author Jesús Santos Baquero
  */
 public class MainNavigationFrame extends javax.swing.JFrame {
 

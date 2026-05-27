@@ -12,6 +12,12 @@ import java.time.LocalDate;
  */
 public class ContenidoUsuarioDB {
 
+    /**
+     * Registrar una visita de un usuario a un contenido. El backend hace upsert:
+     * inserta la fila si no existe o incrementa el contador si ya existia.
+     * @param contenidoUsuario la relación contenido-usuario a registrar.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean crearContenidoUsuario(ContenidoUsuario contenidoUsuario) {
         LocalDate fecha = contenidoUsuario.getFechaVisita();
         String path = "/contenido-usuario/" + contenidoUsuario.getIdUsuarioRegistrado()

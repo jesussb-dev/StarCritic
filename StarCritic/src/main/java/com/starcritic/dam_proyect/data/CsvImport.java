@@ -14,13 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author jsb
+ * Utilidad para importar ficheros CSV separados por punto y coma. Descarta
+ * filas vacias, cabeceras y filas cuya primera columna no sea numérica.
+ * @author Jesús Santos Baquero
  */
 public class CsvImport {
 
     private static final String SEPARATOR = ";";
 
+    /**
+     * Importar un fichero CSV y devolver sus filas validas.
+     * @param rutaArchivo la ruta absoluta del fichero CSV.
+     * @return las filas validas en formato lista de arrays de columnas.
+     * @throws IOException si ocurre un error al leer el fichero.
+     */
     public static List<String[]> importarCsv(String rutaArchivo) throws IOException {
         List<String[]> filas = new ArrayList<>();
 

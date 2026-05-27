@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Repository
 public interface CriticaRepository extends JpaRepository<Critica, Long> {
     /**
@@ -60,7 +63,7 @@ public interface CriticaRepository extends JpaRepository<Critica, Long> {
     List<CriticaVideojuego> obtenerCriticasVideojuegoPorUsuario(@Param("idAspecto") Long idAspecto,@Param("idUsuario") Long idUsuario);
     
     /**
-     * Comprobar que una critica le pertenece a ese usuario o no
+     * Comprobar que una critica le pertenece a ese usuario o no.
      * @param idCritica critica la cual se busca saber su usuario
      * @param idUsuario el usuario que se quiere comprobar
      * @return si el usuario no hizo esa critica o no
@@ -68,7 +71,7 @@ public interface CriticaRepository extends JpaRepository<Critica, Long> {
     boolean existsByIdCriticaAndUsuarioRegistrado_IdUsuario(Long idCritica, Long idUsuario);
     
     /**
-     * Comprobar que una critica le pertenece a ese usuario o no
+     * Comprobar que una critica le pertenece a ese usuario o no.
      * @param idCritica critica la cual se busca saber su usuario
      * @param idUsuario el usuario que se quiere comprobar
      * @return si el usuario no hizo esa critica o no

@@ -14,8 +14,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
 /**
- *
- * @author jsanbaq
+ * Diálogo de bandeja de entrada que lista los mensajes recibidos por el usuario.
+ * @author Jesús Santos Baquero
  */
 public class MessagesDialog extends javax.swing.JDialog {
     

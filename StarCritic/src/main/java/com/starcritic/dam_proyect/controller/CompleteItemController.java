@@ -30,6 +30,13 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de detalle de un contenido. Carga la ficha completa
+ * desde la API correspondiente (OMDb/RAWG) o desde el backend local y gestiona
+ * las acciones de usuario: guardar en lista, escribir critica y visualizar
+ * etiquetas/aspectos.
+ * @author Jesús Santos Baquero
+ */
 public class CompleteItemController extends BaseController<CompleteItemDialog> {
 
     private  String id;

@@ -10,11 +10,6 @@ public final class ImageUtils {
     private ImageUtils() {
     }
 
-    /**
-     * Scales an image into a TYPE_INT_ARGB BufferedImage using Graphics2D.
-     * Avoids AreaAveragingScaleFilter (Image.SCALE_SMOOTH), which throws
-     * ClassCastException ([I cannot be cast to [B) on some PNG color models.
-     */
     public static BufferedImage scale(Image src, int w, int h) {
         BufferedImage scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = scaled.createGraphics();

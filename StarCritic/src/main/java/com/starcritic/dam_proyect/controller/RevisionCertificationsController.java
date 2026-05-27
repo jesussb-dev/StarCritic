@@ -23,6 +23,11 @@ import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador de la vista de revisión de certificaciones de critico. Permite
+ * descargar el PDF de la certificación, aceptarla o rechazarla.
+ * @author Jesús Santos Baquero
+ */
 public class RevisionCertificationsController extends BaseController<SearchDialog> {
 
     public RevisionCertificationsController(SearchDialog view, Model model) {

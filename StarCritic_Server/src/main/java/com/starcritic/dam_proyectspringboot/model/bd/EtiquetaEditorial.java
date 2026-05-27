@@ -6,6 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.Objects;
+/**
+ * @author Jesús Santos Baquero
+ */
 @Entity
 @Table(name = "etiqueta_editorial")
 public class EtiquetaEditorial {

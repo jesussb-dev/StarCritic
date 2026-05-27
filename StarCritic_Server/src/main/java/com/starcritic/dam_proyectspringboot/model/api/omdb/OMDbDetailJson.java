@@ -3,6 +3,9 @@ package com.starcritic.dam_proyectspringboot.model.api.omdb;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 public class OMDbDetailJson {
     @JsonProperty("Title")        private String title;
     @JsonProperty("Year")         private String year;

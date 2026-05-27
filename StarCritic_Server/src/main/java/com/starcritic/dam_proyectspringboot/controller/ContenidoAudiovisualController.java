@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @RestController
 @RequestMapping("/api/contenidos-audiovisuales")
 public class ContenidoAudiovisualController {
@@ -29,14 +32,7 @@ public class ContenidoAudiovisualController {
         return contenidoAudiovisualService.listarTodos();
     }
     
-    /**
-     * ResponseEntity representa la respuesta HTTP completa: código de estado,
-     * cabeceras y cuerpo. Permite controlar explícitamente qué se le devuelve
-     * al cliente, por ejemplo respondiendo 200 con el objeto encontrado o 404
-     * cuando la búsqueda no arroja resultados. Esto me permite detectar en e cliente
-     * cuando fallo la busqueda.
-     */ 
-    
+
     /**
      * Obtener un contenido audiovisual por su id propio de la BD
      * @param id el id de la BD

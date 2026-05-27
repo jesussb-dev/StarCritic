@@ -9,6 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador de la vista de administración de usuarios. Permite banear,
+ * desbanear, eliminar y enviar advertencias a los usuarios registrados.
+ * @author Jesús Santos Baquero
+ */
 public class AdminUserController extends BaseController<ListsUserDialog> {
 
     public AdminUserController(ListsUserDialog view, Model model) {

@@ -3,6 +3,9 @@ package com.starcritic.dam_proyectspringboot.model.api.omdb;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 public class OMDbListSearch {
     @JsonProperty("Search")       private List<OMDbSearchJson> contenidos;
     @JsonProperty("totalResults") private String totalResults;

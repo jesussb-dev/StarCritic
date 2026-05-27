@@ -11,6 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de creación de una critica sobre un aspecto concreto
+ * de un contenido. Distingue entre critica audiovisual y de videojuego.
+ * @author Jesús Santos Baquero
+ */
 public class CriticController extends BaseController<CriticDialog> {
 
     private  TipoContenido type;

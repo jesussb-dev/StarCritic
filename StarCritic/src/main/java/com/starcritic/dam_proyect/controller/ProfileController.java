@@ -10,6 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de perfil del usuario. Permite consultar y modificar
+ * los datos personales (nombre, correo, contraseña) y acceder a las estadisticas.
+ * @author Jesús Santos Baquero
+ */
 public class ProfileController extends BaseController<ProfileDialog> {
 
     public ProfileController(ProfileDialog view, Model model) {

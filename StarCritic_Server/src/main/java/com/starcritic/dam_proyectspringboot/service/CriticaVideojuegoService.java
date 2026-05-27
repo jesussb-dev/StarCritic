@@ -5,6 +5,9 @@ import com.starcritic.dam_proyectspringboot.repository.CriticaVideojuegoReposito
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Service
 public class CriticaVideojuegoService {
 
@@ -14,6 +17,11 @@ public class CriticaVideojuegoService {
         this.criticaVideojuegoRepository = criticaVideojuegoRepository;
     }
 
+    /**
+     * Guardar (crear o actualizar) una critica de un videojuego.
+     * @param criticaVideojuego el objeto critica a persistir.
+     * @return la critica guardada con su identificador asignado.
+     */
     @Transactional
     public CriticaVideojuego guardar(CriticaVideojuego criticaVideojuego) {
         return criticaVideojuegoRepository.save(criticaVideojuego);

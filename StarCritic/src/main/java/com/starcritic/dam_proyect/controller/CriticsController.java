@@ -23,6 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo que muestra las criticas de un contenido. Carga el
+ * listado por aspecto seleccionado y permite escribir o eliminar criticas
+ * propias.
+ * @author Jesús Santos Baquero
+ */
 public class CriticsController extends BaseController<CriticsDialog> {
 
     private  TipoContenido type;
@@ -140,6 +146,11 @@ public class CriticsController extends BaseController<CriticsDialog> {
         }
     }
 
+    /**
+     * Cargar y mostrar en la vista las criticas correspondientes al aspecto
+     * actualmente seleccionado del contenido. Calcula tambien la media y marca
+     * a los usuarios que son criticos.
+     */
     public void cargarCriticasDelAspectoSeleccionado() {
         view.clearCriticas();
         Aspecto aspecto = view.getSelectedAspect();

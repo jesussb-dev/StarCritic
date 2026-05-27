@@ -30,8 +30,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 /**
- *
- * @author jsb
+ * Controlador de la vista de estadisticas globales. Construye los graficos de
+ * altas por mes, origen del catalogo y distribución de puntuaciones usando
+ * JFreeChart.
+ * @author Jesús Santos Baquero
  */
 public class StatsController {
 

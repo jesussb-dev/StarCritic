@@ -7,8 +7,9 @@ package com.starcritic.dam_proyect.view;
 import java.awt.event.ActionListener;
 
 /**
- *
- * @author jsb
+ * Diálogo de redacción de un mensaje hacia otro usuario con campos de asunto
+ * y cuerpo.
+ * @author Jesús Santos Baquero
  */
 public class MessageDialog extends javax.swing.JDialog {
 

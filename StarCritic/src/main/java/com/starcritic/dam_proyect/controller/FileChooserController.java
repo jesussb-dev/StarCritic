@@ -11,6 +11,12 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de selección de archivo para subir la certificación
+ * de un critico. Sube el PDF a Cloudflare R2 y deja la certificación en estado
+ * PENDIENTE para su revisión.
+ * @author Jesús Santos Baquero
+ */
 public class FileChooserController {
 
     private  JFileChooser chooser;

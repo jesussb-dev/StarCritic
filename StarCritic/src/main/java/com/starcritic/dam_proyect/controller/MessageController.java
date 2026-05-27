@@ -11,6 +11,11 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de redacción de un mensaje hacia un destinatario
+ * concreto. Envía el mensaje al backend via {@link MensajeDB}.
+ * @author Jesús Santos Baquero
+ */
 public class MessageController extends BaseController<MessageDialog> {
 
     private final int idDestinatario;

@@ -36,7 +36,7 @@ import net.sf.jasperreports.view.JasperViewer;
  * los datos se obtienen de la API REST y se inyectan como datasource en memoria,
  * de modo que el cliente no necesita acceso a la base de datos.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class JasperExport {
 
@@ -54,6 +54,11 @@ public class JasperExport {
         this.type = type;
     }
 
+    /**
+     * Exportar la lista de contenido a PDF o CSV. El fichero se guarda en
+     * {@code ./Listas/} con un nombre que incluye el nombre de la lista y el id
+     * del usuario. Si el tipo es "pdf", se abre el visor de Jasper.
+     */
     public void exportList() {
         try {
             // La plantilla usa "Times New Roman"; en SOs sin esa fuente (Linux)

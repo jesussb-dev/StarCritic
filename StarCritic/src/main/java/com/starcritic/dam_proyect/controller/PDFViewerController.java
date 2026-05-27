@@ -8,8 +8,9 @@ import com.starcritic.dam_proyect.data.PDFViewer;
 import com.starcritic.dam_proyect.view.PDFViewerDialog;
 
 /**
- *
- * @author jsb
+ * Controlador del diálogo de visualización de un PDF. Renderiza la primera
+ * página del fichero indicado por su ruta y la coloca en el {@link PDFViewerDialog}.
+ * @author Jesús Santos Baquero
  */
 public class PDFViewerController {
     private PDFViewerDialog view;

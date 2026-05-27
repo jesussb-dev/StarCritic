@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @RestController
 @RequestMapping("/api/contenidos")
 public class ContenidoController {
@@ -20,7 +23,9 @@ public class ContenidoController {
     public ContenidoController(ContenidoService contenidoService) {
         this.contenidoService = contenidoService;
     }
+    
 
+    
     /**
      * Obtener un contenido por su id propio de la BD
      * @param id el id de la BD

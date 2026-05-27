@@ -22,6 +22,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador encargado de cargar las recomendaciones de cada tipo de contenido
+ * (películas, series y videojuegos) en la pantalla principal.
+ * @author Jesús Santos Baquero
+ */
 public class RecommendationController extends BaseController<MainNavigationFrame> {
 
     private CloudeClient posterCloud;
@@ -38,6 +43,11 @@ public class RecommendationController extends BaseController<MainNavigationFrame
         return posterCloud;
     }
 
+    /**
+     * Cargar las recomendaciones de películas, series y videojuegos para un
+     * usuario en la vista principal.
+     * @param idUsuario el identificador del usuario, o -1 para recomendaciones globales.
+     */
     public void load(int idUsuario) {
         view.clearFilms();
         view.clearSeries();

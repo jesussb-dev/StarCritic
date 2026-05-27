@@ -29,6 +29,11 @@ import java.util.List;
  */
 public class AdminContenidoDB {
 
+    /**
+     * Obtener el catálogo completo (audiovisuales + videojuegos) unificado y
+     * ordenado por identificador.
+     * @return los contenidos del catálogo en formato lista.
+     */
     public static List<Contenido> obtenerCatalogoCompleto() {
         List<Contenido> catalogo = new ArrayList<>();
 
@@ -54,16 +59,33 @@ public class AdminContenidoDB {
         return catalogo;
     }
 
+    /**
+     * Modificar si un contenido se encuentra oculto o no.
+     * @param idContenido el contenido sobre el que se quiere hacer la modificación.
+     * @param oculto el nuevo valor tras la modificación.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean actualizarOculto(int idContenido, boolean oculto) {
         return ApiClient.get().patchOk("/contenidos/" + idContenido + "/oculto?valor=" + oculto, null);
     }
 
+    /**
+     * Modificar si un contenido se encuentra destacado o no.
+     * @param idContenido el contenido sobre el que se quiere hacer la modificación.
+     * @param destacado el nuevo valor tras la modificación.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean actualizarDestacado(int idContenido, boolean destacado) {
         return ApiClient.get().patchOk("/contenidos/" + idContenido + "/destacado?valor=" + destacado, null);
     }
 
     /**
-     * @param posterFile puede ser null (sin póster)
+     * Dar de alta un contenido de origen LOCAL, subiendo opcionalmente el
+     * póster a R2 (Cloudflare) antes de crearlo.
+     * @param cloud el cliente de Cloudflare para subir el póster.
+     * @param contenido el contenido a crear (debe tener titulo y tipo).
+     * @param posterFile el archivo del póster a subir, puede ser null (sin póster).
+     * @return true si la operación fue exitosa, false en caso contrario.
      */
     public static boolean crearContenidoLocal(CloudeClient cloud,
             Contenido contenido, File posterFile) {
@@ -92,8 +114,12 @@ public class AdminContenidoDB {
     }
 
     /**
-     * Actualiza título, sinopsis, fecha y opcionalmente el póster de un
-     * contenido LOCAL.
+     * Actualizar título, sinopsis, fecha y opcionalmente el póster de un
+     * contenido de origen LOCAL.
+     * @param cloud el cliente de Cloudflare para subir el nuevo póster.
+     * @param contenido el contenido con los datos actualizados (debe ser LOCAL).
+     * @param nuevoPoster el archivo del nuevo póster, puede ser null para no cambiarlo.
+     * @return true si la operación fue exitosa, false en caso contrario.
      */
     public static boolean actualizarContenidoLocal(CloudeClient cloud,
             Contenido contenido, File nuevoPoster) {
@@ -114,10 +140,23 @@ public class AdminContenidoDB {
         return ApiClient.get().postObject(subtipoPath(contenido), contenido, JsonObject.class) != null;
     }
 
+    /**
+     * Borrado lógico de un contenido marcandolo como oculto.
+     * @param idContenido el identificador del contenido a ocultar.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean softDelete(int idContenido) {
         return actualizarOculto(idContenido, true);
     }
 
+    /**
+     * Borrado físico de un contenido. Solo se permite sobre contenido LOCAL;
+     * si el borrado en la base de datos es exitoso, tambien se elimina el
+     * póster asociado de Cloudflare R2.
+     * @param idContenido el identificador del contenido a eliminar.
+     * @param cloud el cliente de Cloudflare para eliminar el póster.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean hardDelete(int idContenido, CloudeClient cloud) {
         if (!puedeHardDelete(idContenido)) {
             System.err.println("No se puede hard-delete el contenido " + idContenido
@@ -136,6 +175,11 @@ public class AdminContenidoDB {
         return ok;
     }
 
+    /**
+     * Comprobar si un contenido puede ser eliminado físicamente.
+     * @param idContenido el identificador del contenido.
+     * @return true si el contenido es de origen LOCAL, false en caso contrario.
+     */
     public static boolean puedeHardDelete(int idContenido) {
         JsonObject contenido = obtenerContenidoJson(idContenido);
         return contenido != null

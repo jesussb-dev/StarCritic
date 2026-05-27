@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Repository
 public interface ContenidoRepository extends JpaRepository<Contenido, Long> {
 
@@ -42,7 +45,7 @@ public interface ContenidoRepository extends JpaRepository<Contenido, Long> {
     /**
      * Metodo para modificar si un contenido se encuentra destacado o no
      * @param idContenido el contenido sobre el que se quiere hacer la modificaciónz
-     * @param destacado
+     * @param destacado el nuevo valor tras la modificación
      * @return devolveara si el metodo ha funcionado
      */
     @Modifying

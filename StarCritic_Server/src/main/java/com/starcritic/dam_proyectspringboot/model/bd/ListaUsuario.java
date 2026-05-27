@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Entity
 @Table(name = "lista_usuario")
 @IdClass(ListaUsuario.PK.class)

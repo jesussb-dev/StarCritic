@@ -25,6 +25,11 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador de la vista de búsqueda dentro de una lista personal. Permite
+ * filtrar los contenidos de una lista concreta y abrir su detalle.
+ * @author Jesús Santos Baquero
+ */
 public class SearchListController extends BaseController<SearchDialog> {
 
     private  String nombreLista;

@@ -4,6 +4,9 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Embeddable
 public class ContenidoUsuarioId implements Serializable {
 

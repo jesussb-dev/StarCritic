@@ -18,8 +18,10 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
 
 /**
- *
- * @author jsb
+ * Diálogo que muestra las criticas de un contenido agrupadas por aspecto.
+ * Incluye una lista de aspectos a la izquierda y las criticas del aspecto
+ * seleccionado a la derecha.
+ * @author Jesús Santos Baquero
  */
 public class CriticsDialog extends javax.swing.JDialog {
 

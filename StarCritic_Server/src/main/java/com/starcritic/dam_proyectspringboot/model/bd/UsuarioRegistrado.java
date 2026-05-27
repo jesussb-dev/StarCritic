@@ -20,7 +20,7 @@ import java.util.Objects;
 
 /**
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 @Entity
 @Table(name = "usuario_registrado")

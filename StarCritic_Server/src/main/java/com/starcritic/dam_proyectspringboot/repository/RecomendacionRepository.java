@@ -15,6 +15,7 @@ import org.springframework.data.repository.query.Param;
  * listas (×2) y flag destacado (+5). La consulta personalizada anade bonus
  * colaborativo, bonus de afinidad por aspectos y penalizaciones por contenido
  * ya resenado o marcado como visto.
+ * @author Jesús Santos Baquero
  */
 public interface RecomendacionRepository extends Repository<Contenido, Long> {
     /**
@@ -152,11 +153,13 @@ public interface RecomendacionRepository extends Repository<Contenido, Long> {
     List<RecommendedItemView> obtenerRecomendacionesPersonalizado(@Param("idUsuario") Long idUsuario,@Param("tipo") String tipo,@Param("limite") int limite);
 
     /**
-     * Devolvera dependiendo de los datos proporcionador una lista de contenidos
+     * Devolvera dependiendo de los datos proporcionados una lista de contenidos:
+     * si {@code idUsuario} es null o negativo se usara el algoritmo global, en
+     * caso contrario se devolveran recomendaciones personalizadas.
      * @param idUsuario el usuario sobre el que utilizar el algoritmo
      * @param tipo el tipo de contenido del que seran los contenidos de las listas
      * @param limite el limite de objetos que obtendra
-     * @return 
+     * @return la lista de contenidos recomendados
      */
     default List<RecommendedItemView> obtenerRecomendaciones(TipoContenido tipo, Long idUsuario, int limite) {
         if (idUsuario == null || idUsuario < 0) {

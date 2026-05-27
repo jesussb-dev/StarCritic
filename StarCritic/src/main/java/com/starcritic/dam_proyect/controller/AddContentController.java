@@ -16,6 +16,12 @@ import java.time.LocalDate;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de creación de contenido LOCAL. Gestiona la selección
+ * de imagen del póster, validación y alta del contenido en el backend a través
+ * de {@link AdminContenidoDB}.
+ * @author Jesús Santos Baquero
+ */
 public class AddContentController extends BaseController<ModifyContentDialog> {
 
     public AddContentController(ModifyContentDialog view, Model model) {

@@ -8,6 +8,9 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import java.util.Objects;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Entity
 @Table(name = "lista_contenido")
 public class ListaContenido {

@@ -1,5 +1,8 @@
 package com.starcritic.dam_proyectspringboot.model.bd;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 public enum Origen {
     OMDB, RAWG, LOCAL;
 

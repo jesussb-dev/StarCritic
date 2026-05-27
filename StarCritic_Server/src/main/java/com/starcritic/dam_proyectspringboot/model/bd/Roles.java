@@ -7,7 +7,7 @@ package com.starcritic.dam_proyectspringboot.model.bd;
 
 /**
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
     public enum Roles{ADMINISTRADOR,ESTANDAR};
 

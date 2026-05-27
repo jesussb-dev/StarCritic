@@ -13,6 +13,11 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de registro de un nuevo usuario. Valida el formato
+ * del correo y crea el usuario en el backend con rol USUARIO.
+ * @author Jesús Santos Baquero
+ */
 public class RegisterUserController extends BaseController<RegisterDialog> {
 
     public RegisterUserController(RegisterDialog view, Model model) {

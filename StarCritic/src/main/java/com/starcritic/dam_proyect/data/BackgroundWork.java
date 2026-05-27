@@ -13,8 +13,9 @@ import java.util.function.Consumer;
 import javax.swing.SwingUtilities;
 
 /**
- *
- * @author jsanbaq
+ * Utilidad para ejecutar tareas en segundo plano fuera del Event Dispatch Thread
+ * de Swing y volver al EDT para entregar el resultado o el error.
+ * @author Jesús Santos Baquero
  */
 public class BackgroundWork {
 
@@ -27,6 +28,14 @@ public class BackgroundWork {
             }
     );
 
+    /**
+     * Ejecutar una tarea con resultado en segundo plano y entregar la respuesta
+     * o el error en el EDT.
+     * @param <T> el tipo del resultado de la tarea.
+     * @param task la tarea a ejecutar fuera del EDT.
+     * @param onSuccess callback invocado en el EDT si la tarea termina sin error.
+     * @param onError callback invocado en el EDT si la tarea lanza una excepción.
+     */
     public static <T> void run(Callable<T> task, Consumer<T> onSuccess, Consumer<Throwable> onError) {
         CompletableFuture.supplyAsync(() -> {
             try {
@@ -44,6 +53,12 @@ public class BackgroundWork {
         }));
     }
 
+    /**
+     * Ejecutar una tarea sin resultado en segundo plano. Solo se notifica al
+     * EDT en caso de error.
+     * @param task la tarea a ejecutar fuera del EDT.
+     * @param onError callback invocado en el EDT si la tarea lanza una excepción.
+     */
     public static void runVoid(Runnable task, Consumer<Throwable> onError) {
         CompletableFuture
                 .runAsync(task, POOL)
@@ -55,6 +70,9 @@ public class BackgroundWork {
                 });
     }
 
+    /**
+     * Detener el pool de hilos. Solo debe llamarse al cerrar la aplicación.
+     */
     public static void shutdown() {
         POOL.shutdownNow();
     }

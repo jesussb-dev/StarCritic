@@ -3,6 +3,9 @@ package com.starcritic.dam_proyectspringboot.model.bd;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Converter(autoApply = true)
 public class EstadoCertificacionConverter implements AttributeConverter<EstadoCertificacion, String> {
 

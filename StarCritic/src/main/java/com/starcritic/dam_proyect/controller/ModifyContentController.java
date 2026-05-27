@@ -13,6 +13,12 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de modificación de un contenido LOCAL. Permite
+ * actualizar el titulo, la sinopsis y opcionalmente el póster subiendolo a
+ * Cloudflare R2.
+ * @author Jesús Santos Baquero
+ */
 public class ModifyContentController extends BaseController<ModifyContentDialog> {
 
     private Contenido contenido;

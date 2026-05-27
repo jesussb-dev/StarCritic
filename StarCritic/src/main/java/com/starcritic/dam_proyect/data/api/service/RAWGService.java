@@ -19,6 +19,13 @@ public class RAWGService {
         this.repoRAWG = new RAWGRepository();
     }
 
+    /**
+     * Buscar videojuegos en RAWG. Requiere al menos 3 caracteres para evitar
+     * búsquedas demasiado amplias.
+     * @param game el nombre a buscar.
+     * @param page el número de página.
+     * @return la respuesta paginada, o null si el texto es demasiado corto.
+     */
     public RAWGListNormal getGames(String game, int page) {
         if (game.length() >= 3) {
             return repoRAWG.search(game, page);
@@ -27,6 +34,11 @@ public class RAWGService {
         }
     }
 
+    /**
+     * Obtener la ficha de detalle de un videojuego de RAWG.
+     * @param id el identificador del videojuego en RAWG.
+     * @return los detalles del videojuego, o null si la petición falla.
+     */
     public RAWGNormalJson getGame(String id) {
         return repoRAWG.getGameDetails(id);
     }

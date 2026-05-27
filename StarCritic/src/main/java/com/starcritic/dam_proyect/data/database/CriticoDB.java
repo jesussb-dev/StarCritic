@@ -16,6 +16,10 @@ import java.util.HashMap;
  */
 public class CriticoDB {
 
+    /**
+     * Obtener los usuarios con certificaciones pendientes de revisión.
+     * @return un mapa indexado por idUsuario con los criticos pendientes.
+     */
     public static HashMap<Integer, Critico> getUsuariosConCertificacionesPendientes() {
         HashMap<Integer, Critico> usuarios = new HashMap<>();
         Critico[] respuesta = ApiClient.get().getObject("/criticos/pendientes", Critico[].class);
@@ -31,6 +35,13 @@ public class CriticoDB {
         return usuarios;
     }
 
+    /**
+     * Promover un usuario existente a critico. El backend solo añade la fila
+     * de la subclase critico (herencia JOINED) conservando los datos del usuario.
+     * @param idUsuario el identificador del usuario a promover.
+     * @param certificacion el texto de la certificacion (puede ser cadena vacia).
+     * @param estado el estado inicial de la certificacion.
+     */
     public static void anhadirCritico(int idUsuario, String certificacion, EstadoCertificacion estado) {
         // Promueve un usuario existente a crítico: el backend solo añade la fila
         // de la subclase critico (herencia JOINED) conservando los datos del
@@ -47,14 +58,30 @@ public class CriticoDB {
         ApiClient.get().postObject("/criticos/" + idUsuario + "/promover", body, Critico.class);
     }
 
+    /**
+     * Obtener un critico por su identificador en la base de datos.
+     * @param idUsuario el identificador del usuario.
+     * @return el critico si existe, en caso contrario null.
+     */
     public static Critico obtenerCritico(int idUsuario) {
         return ApiClient.get().getObject("/criticos/" + idUsuario, Critico.class);
     }
 
+    /**
+     * Comprobar si un usuario es critico.
+     * @param idUsuario el identificador del usuario.
+     * @return true si el usuario es critico, false en caso contrario.
+     */
     public static boolean esCritico(int idUsuario) {
         return ApiClient.get().getBoolean("/criticos/" + idUsuario + "/es-critico");
     }
 
+    /**
+     * Modificar los datos de un critico. La contraseña va nula en el JSON y
+     * el backend conserva la existente.
+     * @param critico el critico con los datos actualizados.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean modificarCritico(Critico critico) {
         // POST con id presente => actualiza usuario_registrado + critico. La
         // contraseña va nula en el JSON y el backend conserva la existente.

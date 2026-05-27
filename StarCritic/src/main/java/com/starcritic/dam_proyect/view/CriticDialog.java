@@ -7,8 +7,9 @@ package com.starcritic.dam_proyect.view;
 import java.awt.event.ActionListener;
 
 /**
- *
- * @author jsb
+ * Diálogo de creación/modificación de una critica con campos para la puntuación
+ * y la descripción.
+ * @author Jesús Santos Baquero
  */
 public class CriticDialog extends javax.swing.JDialog {
     

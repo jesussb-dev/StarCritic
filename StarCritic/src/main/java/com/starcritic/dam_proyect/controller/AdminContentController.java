@@ -22,6 +22,12 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * Controlador de la vista de administración del catálogo. Permite a un
+ * administrador crear, editar, ocultar/destacar y borrar contenidos, distinguiendo
+ * entre contenido LOCAL (editable y borrable) y OMDb/RAWG (solo ocultable).
+ * @author Jesús Santos Baquero
+ */
 public class AdminContentController extends BaseController<AdminContentDialog> {
 
     private List<Contenido> todosLosContenidos;

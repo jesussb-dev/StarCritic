@@ -14,16 +14,31 @@ import java.util.List;
  */
 public class MensajeDB {
 
+    /**
+     * Insertar un mensaje en la base de datos. Gson serializa el POJO y el
+     * backend asigna el identificador autogenerado.
+     * @param mensaje el mensaje a insertar.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean insertarMensaje(Mensaje mensaje) {
-        // Alta: Gson serializa el POJO; el backend asigna el id autogenerado.
         return ApiClient.get().postObject("/mensajes", mensaje, Mensaje.class) != null;
     }
 
+    /**
+     * Modificar un mensaje existente. El PUT con el id en la ruta actualiza
+     * el mensaje en la base de datos.
+     * @param mensaje el mensaje con los datos actualizados.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean modificarMensaje(Mensaje mensaje) {
-        // PUT con el id en la ruta => actualización del mensaje existente.
         return ApiClient.get().putOk("/mensajes/" + mensaje.getIdMensaje(), mensaje);
     }
 
+    /**
+     * Obtener todos los mensajes recibidos por un usuario.
+     * @param idUsuario el identificador del usuario destinatario.
+     * @return los mensajes del usuario en formato lista.
+     */
     public static List<Mensaje> obtenerTodosLosMensajesParaUsuario(int idUsuario) {
         Mensaje[] respuesta = ApiClient.get().getObject("/mensajes/destinatario/" + idUsuario, Mensaje[].class);
         DetallesMensaje detalles = new DetallesMensaje();

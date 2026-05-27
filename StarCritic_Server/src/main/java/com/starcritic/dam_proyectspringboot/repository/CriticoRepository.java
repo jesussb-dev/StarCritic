@@ -9,17 +9,20 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Repository
 public interface CriticoRepository extends JpaRepository<Critico, Long> {
     /**
-     * Devuelve todos los criticos que se encuentren en un determinado estado
+     * Devuelve todos los criticos que se encuentren en un determinado estado.
      * @param estado el estado en el que se desea que se encuentren los criticps
      * @return todos los críticos en ese estado en formato lista
      */
     List<Critico> findByEstado(EstadoCertificacion estado);
     /**
      * Devuelve todos los criticos que se encuentren pendientes, pero siendo un metodo
-     * al que pueden acceder las clases que implementen esta interfaz
+     * al que pueden acceder las clases que implementen esta interfaz.
      * @return todos los críticos pendiente en formato lista
      */
     default List<Critico> obtenerCertificacionesPendientes() {

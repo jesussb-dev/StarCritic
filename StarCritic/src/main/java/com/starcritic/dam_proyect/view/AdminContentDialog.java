@@ -12,8 +12,9 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
 
 /**
- *
- * @author jsb
+ * Diálogo de administración del catálogo. Lista todos los contenidos y expone
+ * los botones para crear, editar, eliminar, destacar y ocultar.
+ * @author Jesús Santos Baquero
  */
 public class AdminContentDialog extends javax.swing.JDialog {
 

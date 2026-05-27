@@ -29,6 +29,12 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador de la vista principal de búsqueda. Permite buscar películas,
+ * series y videojuegos combinando resultados de OMDb/RAWG con el catálogo
+ * local del backend, y abrir el detalle de cada contenido.
+ * @author Jesús Santos Baquero
+ */
 public class SearchController extends BaseController<SearchDialog> {
 
     private int actualPage = 0;

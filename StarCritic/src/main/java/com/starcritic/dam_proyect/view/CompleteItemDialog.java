@@ -15,8 +15,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 
 /**
- *
- * @author jsanbaq
+ * Diálogo que muestra la ficha completa de un contenido (titulo, póster,
+ * sinopsis, géneros, etiquetas) y permite al usuario guardarlo en lista,
+ * escribir critica o ver criticas.
+ * @author Jesús Santos Baquero
  */
 public class CompleteItemDialog extends javax.swing.JDialog {
 

@@ -26,6 +26,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * Controlador del diálogo de listas personales del usuario. Permite crear,
+ * importar/exportar (CSV, PDF, Jasper) y eliminar listas, asi como gestionar
+ * los contenidos contenidos dentro de ellas.
+ * @author Jesús Santos Baquero
+ */
 public class ListsUserController extends BaseController<ListsUserDialog> {
 
     public ListsUserController(ListsUserDialog view, Model model) {
@@ -217,6 +223,10 @@ public class ListsUserController extends BaseController<ListsUserDialog> {
         return mi;
     }
 
+    /**
+     * Recargar el listado de listas del usuario en la vista, aplicando el
+     * filtro de búsqueda actual.
+     */
     public void addListUser() {
         view.clearListUser();
         String filtro = view.getSearchText() != null ? view.getSearchText().toLowerCase().trim() : "";
@@ -234,6 +244,10 @@ public class ListsUserController extends BaseController<ListsUserDialog> {
                 }, err -> JOptionPane.showMessageDialog(view, "Error al añadir el contenido a la lista", "Error", JOptionPane.ERROR_MESSAGE));
     }
 
+    /**
+     * Añadir un elemento al listado de la vista.
+     * @param value el texto a añadir al listado.
+     */
     public void addItemToList(String value) {
         view.addItemList(value);
     }

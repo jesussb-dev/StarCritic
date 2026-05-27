@@ -14,6 +14,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import java.util.Objects;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Entity
 @Table(name = "critica")
 @Inheritance(strategy = InheritanceType.JOINED)

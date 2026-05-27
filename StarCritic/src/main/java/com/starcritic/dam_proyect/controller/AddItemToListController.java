@@ -18,6 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo que permite añadir un contenido a una de las listas
+ * personales del usuario actual. Filtra las listas excluyendo las que ya
+ * contienen el contenido.
+ * @author Jesús Santos Baquero
+ */
 public class AddItemToListController extends BaseController<ListsUserDialog> {
 
     private  CompleteItemDialog parentView;

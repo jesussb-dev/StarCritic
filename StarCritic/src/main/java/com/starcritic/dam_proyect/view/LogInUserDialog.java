@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 /**
- *
- * @author jsanbaq
+ * Diálogo de inicio de sesión con campos para nombre de usuario y contraseña.
+ * @author Jesús Santos Baquero
  */
 public class LogInUserDialog extends javax.swing.JDialog {
     
@@ -38,7 +38,6 @@ public class LogInUserDialog extends javax.swing.JDialog {
         UIStyle.styleField(userTextField);
         UIStyle.stylePasswordField(userPasswordField);
 
-        UIStyle.styleMutedLabel(forgotLabel);
         UIStyle.stylePrimaryButton(logInButton);
         UIStyle.styleSecondaryButton(registerButton);
         setTitle("Star Critic — Iniciar sesión");
@@ -59,7 +58,6 @@ public class LogInUserDialog extends javax.swing.JDialog {
         userTextField = new javax.swing.JTextField();
         passwordLabel = new javax.swing.JLabel();
         userPasswordField = new javax.swing.JPasswordField();
-        forgotLabel = new javax.swing.JLabel();
         registerButton = new javax.swing.JButton();
         logInButton = new javax.swing.JButton();
 
@@ -83,8 +81,6 @@ public class LogInUserDialog extends javax.swing.JDialog {
 
         userPasswordField.setText("");
 
-        forgotLabel.setText("¿Olvidaste tu contraseña?");
-
         registerButton.setText("Registrarse");
 
         logInButton.setText("Confirmar");
@@ -96,9 +92,6 @@ public class LogInUserDialog extends javax.swing.JDialog {
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(forgotLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
                         .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
@@ -130,9 +123,7 @@ public class LogInUserDialog extends javax.swing.JDialog {
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordLabel)
                     .addComponent(userPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(forgotLabel)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerButton)
                     .addComponent(logInButton))
@@ -173,7 +164,6 @@ public class LogInUserDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
-    private javax.swing.JLabel forgotLabel;
     private javax.swing.JButton logInButton;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JButton registerButton;

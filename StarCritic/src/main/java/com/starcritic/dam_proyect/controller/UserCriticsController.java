@@ -17,6 +17,11 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * Controlador del diálogo "Mis criticas" que lista las criticas hechas por el
+ * usuario actual agrupadas por aspecto y permite eliminarlas.
+ * @author Jesús Santos Baquero
+ */
 public class UserCriticsController extends BaseController<CriticsDialog> {
 
     public UserCriticsController(CriticsDialog view, Model model) {

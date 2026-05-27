@@ -13,10 +13,11 @@ import com.starcritic.dam_proyect.model.pojo.api.OMDbListSearch;
 public class OMDbRepository {
 
     /**
-     * Búsqueda paginada.
-     *
-     * @param type {@code "series"} para series; cualquier otro valor (p. ej.
-     *             {@code "movie"}) se trata como película.
+     * Búsqueda paginada de películas o series por título.
+     * @param query el texto a buscar.
+     * @param type el tipo de contenido: "series" para series, cualquier otro valor (p.ej. "movie") como película.
+     * @param page el número de página (los resultados se paginan de 10 en 10).
+     * @return la respuesta de OMDb envuelta en {@link OMDbListSearch}, o null si la petición falla.
      */
     public OMDbListSearch search(String query, String type, int page) {
         String recurso = "series".equalsIgnoreCase(type) ? "/omdb/series" : "/omdb/peliculas";
@@ -24,6 +25,11 @@ public class OMDbRepository {
         return ApiClient.get().getObject(path, OMDbListSearch.class);
     }
 
+    /**
+     * Obtener la ficha de detalle de una película o serie por su identificador OMDb.
+     * @param id el identificador IMDb (p.ej. tt0133093).
+     * @return los detalles del contenido, o null si la petición falla.
+     */
     public OMDbDetailJson detail(String id) {
         return ApiClient.get().getObject("/omdb/detalle/" + ApiClient.enc(id), OMDbDetailJson.class);
     }

@@ -22,26 +22,56 @@ import java.util.List;
  */
 public class CriticaDB {
 
+    /**
+     * Obtener las criticas de un aspecto sobre un contenido audiovisual.
+     * @param idAspecto el identificador del aspecto.
+     * @param idContenidoAudiovisual el identificador del contenido audiovisual.
+     * @return las criticas en formato lista.
+     */
     public static List<Critica> obtenerCriticasAudiovisualPorAspecto(int idAspecto, int idContenidoAudiovisual) {
         return parsearCriticas(ApiClient.get().getJson(
                 "/criticas/audiovisual/aspecto/" + idAspecto + "/contenido/" + idContenidoAudiovisual));
     }
 
+    /**
+     * Obtener las criticas de un aspecto sobre un videojuego.
+     * @param idAspecto el identificador del aspecto.
+     * @param idVideojuego el identificador del videojuego.
+     * @return las criticas en formato lista.
+     */
     public static List<Critica> obtenerCriticasVideojuegoPorAspecto(int idAspecto, int idVideojuego) {
         return parsearCriticas(ApiClient.get().getJson(
                 "/criticas/videojuego/aspecto/" + idAspecto + "/videojuego/" + idVideojuego));
     }
 
+    /**
+     * Obtener las criticas de audiovisual hechas por un usuario sobre un aspecto.
+     * @param idAspecto el identificador del aspecto.
+     * @param idCritico el identificador del usuario.
+     * @return las criticas en formato lista.
+     */
     public static List<Critica> obtenerCriticasAudiovisualPorUsuario(int idAspecto, int idCritico) {
         return parsearCriticas(ApiClient.get().getJson(
                 "/criticas/audiovisual/aspecto/" + idAspecto + "/usuario/" + idCritico));
     }
 
+    /**
+     * Obtener las criticas de videojuego hechas por un usuario sobre un aspecto.
+     * @param idAspecto el identificador del aspecto.
+     * @param idUsuario el identificador del usuario.
+     * @return las criticas en formato lista.
+     */
     public static List<Critica> obtenerCriticasVideojuegoPorUsuario(int idAspecto, int idUsuario) {
         return parsearCriticas(ApiClient.get().getJson(
                 "/criticas/videojuego/aspecto/" + idAspecto + "/usuario/" + idUsuario));
     }
 
+    /**
+     * Dar de alta una critica sobre un contenido audiovisual. El identificador
+     * asignado por el backend se asigna al POJO recibido.
+     * @param critica la critica a registrar.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean registrarCriticaAudiovisual(CriticaAudiovisual critica) {
         JsonObject body = cuerpoBase(critica.getPuntuacion(), critica.getDescripcion(),
                 critica.getIdUsuarioRegistrado(), critica.getIdAspecto());
@@ -49,6 +79,12 @@ public class CriticaDB {
         return crear("/criticas-audiovisuales", body, critica);
     }
 
+    /**
+     * Dar de alta una critica sobre un videojuego. El identificador asignado
+     * por el backend se asigna al POJO recibido.
+     * @param critica la critica a registrar.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     public static boolean registrarCriticaVideojuego(CriticaVideojuego critica) {
         JsonObject body = cuerpoBase(critica.getPuntuacion(), critica.getDescripcion(),
                 critica.getIdUsuarioRegistrado(), critica.getIdAspecto());
@@ -56,10 +92,20 @@ public class CriticaDB {
         return crear("/criticas-videojuegos", body, critica);
     }
 
+    /**
+     * Eliminar una critica por su identificador.
+     * @param idCritica el identificador de la critica a eliminar.
+     */
     public static void eliminarCritica(int idCritica) {
         ApiClient.get().delete("/criticas/" + idCritica);
     }
 
+    /**
+     * Comprobar si una critica pertenece a un usuario concreto.
+     * @param idUsuario el identificador del usuario.
+     * @param idCritica el identificador de la critica.
+     * @return true si la critica pertenece al usuario, false en caso contrario.
+     */
     public static boolean esCriticaUsuario(int idUsuario, int idCritica) {
         return ApiClient.get().getBoolean("/criticas/" + idCritica + "/es-de-usuario/" + idUsuario);
     }

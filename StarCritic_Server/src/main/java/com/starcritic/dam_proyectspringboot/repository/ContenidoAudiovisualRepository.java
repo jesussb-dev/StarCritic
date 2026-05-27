@@ -5,10 +5,17 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Repository
 public interface ContenidoAudiovisualRepository extends JpaRepository<ContenidoAudiovisual, Long> {
 
-    /** Busca por el identificador de la API externa (OMDb). */
+    /**
+     * Busca por el identificador de la API externa (OMDb).
+     * @param idOmdb el identificador de la API externa
+     * @return el contenido audiovisual en el formato correcto
+     */
     Optional<ContenidoAudiovisual> findByIdOmdb(String idOmdb);
     
     /**

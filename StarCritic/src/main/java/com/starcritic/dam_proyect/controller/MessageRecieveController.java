@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de bandeja de entrada de mensajes. Carga los mensajes
+ * recibidos del usuario actual y marca como leidos los que se abren.
+ * @author Jesús Santos Baquero
+ */
 public class MessageRecieveController extends BaseController<MessagesDialog> {
 
     public MessageRecieveController(MessagesDialog view, Model model) {

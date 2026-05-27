@@ -26,6 +26,12 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+/**
+ * Controlador de la vista de estadisticas personales de un usuario. Construye
+ * los graficos de visitas por mes, media por aspecto y tipos guardados usando
+ * JFreeChart.
+ * @author Jesús Santos Baquero
+ */
 public class StatsUserController {
 
     private  StatsDialog view;

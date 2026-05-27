@@ -12,9 +12,10 @@ import org.springframework.data.repository.query.Param;
 /**
  * Consultas agregadas para los paneles de estadisticas.
  *
- * Los metodos {@code *Raw} devuelven la proyeccion {@link KeyValueView}; los
- * metodos por defecto las envuelven en un {@link LinkedHashMap} para conservar
- * el orden definido por SQL (igual que la antigua EstadisticasDB).
+ * Los metodos  devuelven la proyeccion KeyValueView; los
+ * metodos por defecto las envuelven en un  LinkedHashMap para conservar
+ * el orden definido por SQL.
+ * @author Jesús Santos Baquero
  */
 public interface EstadisticasRepository extends Repository<Contenido, Long> {
 
@@ -36,7 +37,7 @@ public interface EstadisticasRepository extends Repository<Contenido, Long> {
      * En este método se obtendran todas las medias de todas las criticas hechas por
      * el usuario en cada aspecto.
      * @param idUsuario el usuario del cual se obtienen los datos
-     * @return una lsita de elementos clave valor (Aspecto, media)                                                                                                                              
+     * @return una lista de elementos clave valor (Aspecto, media)                                                                                                                              
      */
     @Query(value = "SELECT a.nombre AS k, AVG(cr.puntuacion) AS v "
             + "FROM critica cr "

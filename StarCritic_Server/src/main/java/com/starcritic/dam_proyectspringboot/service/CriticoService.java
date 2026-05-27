@@ -10,6 +10,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Service
 public class CriticoService {
 
@@ -22,10 +25,19 @@ public class CriticoService {
         this.usuarioRegistradoRepository = usuarioRegistradoRepository;
     }
 
+    /**
+     * Obtener todos los criticos guardados en la base de datos.
+     * @return los criticos en formato lista.
+     */
     public List<Critico> listarTodos() {
         return criticoRepository.findAll();
     }
 
+    /**
+     * Obtener un critico por su identificador propio de la base de datos.
+     * @param id el identificador unico en la base de datos.
+     * @return el critico si existe, en caso contrario un Optional vacio.
+     */
     public Optional<Critico> buscarPorId(Long id) {
         return criticoRepository.findById(id);
     }
@@ -33,6 +45,8 @@ public class CriticoService {
     /**
      * Comprueba si un usuario_registrado es ademas critico. Con herencia JOINED
      * basta con verificar que existe la fila de la subclase con ese mismo id.
+     * @param idUsuario el identificador unico del usuario en la base de datos.
+     * @return true si el usuario es ademas critico, false en caso contrario.
      */
     public boolean esCritico(Long idUsuario) {
         return idUsuario != null && criticoRepository.existsById(idUsuario);
@@ -43,6 +57,8 @@ public class CriticoService {
      * La contraseña recibida se trata como texto plano y se cifra; si llega en
      * blanco se conserva el hash del usuario ya existente para no borrarlo al
      * promover/actualizar un crítico.
+     * @param critico el objeto critico a persistir.
+     * @return el critico guardado o actualizado.
      */
     @Transactional
     public Critico guardar(Critico critico) {
@@ -84,6 +100,11 @@ public class CriticoService {
      * Promueve un usuario_registrado existente a critico anhadiendo solo la fila
      * de la subclase (herencia JOINED). Si el usuario ya es critico, se devuelve
      * tal cual sin reinsertar.
+     * @param idUsuario el identificador unico del usuario a promover.
+     * @param certificacion la clave de acceso a la nube con el archivo de certificacion,
+     * puede ser null.
+     * @param estado el estado de validacion del critico, por defecto NO_SOLICITADA si es null.
+     * @return el critico recien promovido o el ya existente.
      */
     @Transactional
     public Critico promover(Long idUsuario, String certificacion, EstadoCertificacion estado) {
@@ -103,10 +124,19 @@ public class CriticoService {
                         "No se pudo promover el usuario con id: " + idUsuario));
     }
 
+    /**
+     * Obtener los criticos que se encuentren en un determinado estado de certificacion.
+     * @param estado el estado de certificacion deseado.
+     * @return los criticos en ese estado en formato lista.
+     */
     public List<Critico> buscarPorEstado(EstadoCertificacion estado) {
         return criticoRepository.findByEstado(estado);
     }
 
+    /**
+     * Obtener los criticos que tienen su certificacion pendiente de revision.
+     * @return los criticos pendientes en formato lista.
+     */
     public List<Critico> obtenerCertificacionesPendientes() {
         return criticoRepository.obtenerCertificacionesPendientes();
     }

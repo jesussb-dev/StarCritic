@@ -1,5 +1,8 @@
 package com.starcritic.dam_proyectspringboot.model.api.rawg;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 public class RAWGNameRef {
     private int id;
     private String name;

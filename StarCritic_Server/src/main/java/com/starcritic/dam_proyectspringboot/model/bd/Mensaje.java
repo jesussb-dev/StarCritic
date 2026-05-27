@@ -7,6 +7,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Entity
 @Table(name = "mensaje")
 public class Mensaje {

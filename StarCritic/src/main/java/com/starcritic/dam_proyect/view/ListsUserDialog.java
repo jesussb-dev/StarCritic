@@ -14,8 +14,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 /**
- *
- * @author jsb
+ * Diálogo que muestra una lista (listas del usuario, usuarios administrables,
+ * etc.) con un menú emergente para acciones contextuales.
+ * @author Jesús Santos Baquero
  */
 public class ListsUserDialog extends javax.swing.JDialog {
     

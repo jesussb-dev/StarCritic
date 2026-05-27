@@ -10,6 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador del diálogo de inicio de sesión. Valida credenciales contra el
+ * backend y delega en el {@link MainNavigationController} la navegación a la
+ * pantalla principal tras un login exitoso.
+ * @author Jesús Santos Baquero
+ */
 public class LogInUserController extends BaseController<LogInUserDialog> {
 
     private MainNavigationController parent;

@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @RestController
 @RequestMapping("/api/omdb")
 public class OMDbController {
@@ -20,6 +23,12 @@ public class OMDbController {
         this.omDbService = omDbService;
     }
 
+    /**
+     * Busca peliculas en la API externa OMDb por nombre y pagina.
+     * @param q el texto de busqueda introducido por el usuario.
+     * @param page el número de pagina de resultados (por defecto 1).
+     * @return el listado de resultados de peliculas, o un 400 si no hay resultados.
+     */
     @GetMapping("/peliculas")
     public ResponseEntity<OMDbListSearch> buscarPeliculas(
             @RequestParam String q,
@@ -28,6 +37,12 @@ public class OMDbController {
         return result != null ? ResponseEntity.ok(result) : ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Busca series en la API externa OMDb por nombre y pagina.
+     * @param q el texto de busqueda introducido por el usuario.
+     * @param page el número de pagina de resultados (por defecto 1).
+     * @return el listado de resultados de series, o un 400 si no hay resultados.
+     */
     @GetMapping("/series")
     public ResponseEntity<OMDbListSearch> buscarSeries(
             @RequestParam String q,
@@ -36,6 +51,11 @@ public class OMDbController {
         return result != null ? ResponseEntity.ok(result) : ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Obtiene el detalle completo de un contenido de OMDb a partir de su identificador IMDb.
+     * @param imdbId el identificador del contenido en IMDb/OMDb.
+     * @return el detalle del contenido en caso de exito, 404 si no existe.
+     */
     @GetMapping("/detalle/{imdbId}")
     public ResponseEntity<OMDbDetailJson> detalle(@PathVariable String imdbId) {
         OMDbDetailJson result = omDbService.getDetalle(imdbId);

@@ -7,6 +7,9 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import java.util.Objects;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @Entity
 @Table(name = "critica_videojuego")
 @PrimaryKeyJoinColumn(name = "ID_critica_videojuego")

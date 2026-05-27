@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @RestController
 @RequestMapping("/api/criticas-audiovisuales")
 public class CriticaAudiovisualController {
@@ -16,7 +19,11 @@ public class CriticaAudiovisualController {
     public CriticaAudiovisualController(CriticaAudiovisualService criticaAudiovisualService) {
         this.criticaAudiovisualService = criticaAudiovisualService;
     }
-
+    /**
+     * Crear una crítica para un un aspecto de un contenido audiovisual.
+     * @param criticaAudiovisual el objeto critica audiovisual que se desea insertar.
+     * @return devuelve la critica si la operación fue exitosa.
+     */
     @PostMapping
     public CriticaAudiovisual crear(@RequestBody CriticaAudiovisual criticaAudiovisual) {
         return criticaAudiovisualService.guardar(criticaAudiovisual);

@@ -21,6 +21,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador de la ventana principal de la aplicación. Coordina la navegación
+ * entre las pantallas de búsqueda, perfil, listas, criticas, administración y
+ * estadisticas, gestionando el menú emergente del usuario.
+ * @author Jesús Santos Baquero
+ */
 public class MainNavigationController extends BaseController<MainNavigationFrame> {
 
     private RecommendationController recommendationCtrl;
@@ -72,12 +78,19 @@ public class MainNavigationController extends BaseController<MainNavigationFrame
         return al;
     }
 
+    /**
+     * Cargar las recomendaciones personalizadas para el usuario actual. Si no
+     * hay usuario en sesión no hace nada.
+     */
     public void loadPersonalizedRecommendations() {
         if (model.getUser() != null) {
             recommendationCtrl.load(model.getUser().getIdUsuario());
         }
     }
 
+    /**
+     * Cargar las recomendaciones globales (no personalizadas).
+     */
     public void loadGlobalRecommendations() {
         recommendationCtrl.load(-1);
     }
@@ -153,6 +166,10 @@ public class MainNavigationController extends BaseController<MainNavigationFrame
         return mi;
     }
 
+    /**
+     * Mostrar en el menú emergente las opciones disponibles para el usuario
+     * autenticado (perfil, criticas, listas y solicitud de critico).
+     */
     public void displayUserOptions() {
         view.clearPopupMenu();
         view.setLabelUser(((UsuarioRegistrado) model.getUser()).getNombreUsuario());
@@ -204,12 +221,20 @@ public class MainNavigationController extends BaseController<MainNavigationFrame
         return mi;
     }
 
+    /**
+     * Añadir al menú emergente las opciones de administración (usuarios,
+     * contenidos y solicitudes de critico).
+     */
     public void addAllPopudAmdimItems() {
         view.addItemPopupMenu(this.addAdministrarUsuariosItem());
         view.addItemPopupMenu(this.addAdministrarContenidoItem());
         view.addItemPopupMenu(this.addRevisarSolicitudesItem());
     }
 
+    /**
+     * Construir la opción de menú para cerrar la sesión actual.
+     * @return el {@link JMenuItem} con el listener de cierre de sesión.
+     */
     public JMenuItem addLogOutItem() {
         JMenuItem mi = new JMenuItem("Cerrar Sesión");
         mi.addActionListener(new ActionListener() {
@@ -225,6 +250,9 @@ public class MainNavigationController extends BaseController<MainNavigationFrame
         return mi;
     }
 
+    /**
+     * Añadir al menú emergente la opción de cerrar sesión.
+     */
     public void addLogOutOption() {
         view.addItemPopupMenu(this.addLogOutItem());
     }

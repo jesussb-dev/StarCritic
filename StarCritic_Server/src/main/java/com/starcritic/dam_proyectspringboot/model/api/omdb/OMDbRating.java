@@ -2,6 +2,9 @@ package com.starcritic.dam_proyectspringboot.model.api.omdb;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 public class OMDbRating {
     @JsonProperty("Source") private String source;
     @JsonProperty("Value")  private String value;

@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Jesús Santos Baquero
+ */
 @RestController
 @RequestMapping("/api/contenido-usuario")
 public class ContenidoUsuarioController {

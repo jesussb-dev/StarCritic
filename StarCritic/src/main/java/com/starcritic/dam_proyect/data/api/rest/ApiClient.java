@@ -54,7 +54,11 @@ public class ApiClient {
         this.client = HttpClient.newHttpClient();
     }
 
-    /** Instancia compartida (perezosa) que usan las clases {@code *DB}. */
+    /**
+     * Obtener la instancia compartida del cliente. Se inicializa perezosamente
+     * la primera vez que se invoca.
+     * @return la instancia compartida del {@link ApiClient}.
+     */
     public static ApiClient get() {
         if (instance == null) {
             instance = new ApiClient();
@@ -64,7 +68,11 @@ public class ApiClient {
 
     // ===================== Verbos HTTP ===================== //
 
-    /** GET que devuelve el JSON crudo, o {@code null} si la respuesta no es 2xx. */
+    /**
+     * Ejecutar una petición GET y obtener el JSON crudo de la respuesta.
+     * @param path la ruta relativa del endpoint a invocar.
+     * @return el JSON de la respuesta, o null si el código no es 2xx.
+     */
     public JsonElement getJson(String path) {
         HttpResponse<String> resp = enviar(peticion(path).GET().build());
         if (!exito(resp)) {
@@ -73,7 +81,13 @@ public class ApiClient {
         return JsonParser.parseString(resp.body());
     }
 
-    /** GET deserializado al tipo indicado (una {@link Class}, p. ej. {@code X[].class} o {@code LinkedHashMap.class}). */
+    /**
+     * Ejecutar una petición GET y deserializar la respuesta al tipo indicado.
+     * @param <T> el tipo destino al que se deserializa la respuesta.
+     * @param path la ruta relativa del endpoint a invocar.
+     * @param tipo el tipo destino (una {@link Class}, p.ej. {@code X[].class}).
+     * @return el objeto deserializado, o null si el código no es 2xx.
+     */
     public <T> T getObject(String path, Type tipo) {
         HttpResponse<String> resp = enviar(peticion(path).GET().build());
         if (!exito(resp)) {
@@ -82,13 +96,24 @@ public class ApiClient {
         return gson.fromJson(resp.body(), tipo);
     }
 
-    /** GET de un endpoint que responde un booleano crudo ({@code true}/{@code false}). */
+    /**
+     * Ejecutar una petición GET sobre un endpoint que devuelve un booleano crudo.
+     * @param path la ruta relativa del endpoint a invocar.
+     * @return true si la respuesta es 2xx y su cuerpo es "true", false en caso contrario.
+     */
     public boolean getBoolean(String path) {
         HttpResponse<String> resp = enviar(peticion(path).GET().build());
         return exito(resp) && Boolean.parseBoolean(resp.body().trim());
     }
 
-    /** POST con cuerpo JSON; devuelve la respuesta deserializada o {@code null}. */
+    /**
+     * Ejecutar una petición POST con cuerpo JSON y deserializar la respuesta.
+     * @param <T> el tipo destino al que se deserializa la respuesta.
+     * @param path la ruta relativa del endpoint a invocar.
+     * @param cuerpo el objeto a serializar como cuerpo JSON, puede ser null.
+     * @param clazz la clase destino para deserializar la respuesta.
+     * @return el objeto deserializado, o null si el código no es 2xx.
+     */
     public <T> T postObject(String path, Object cuerpo, Class<T> clazz) {
         HttpResponse<String> resp = enviar(peticion(path).POST(publicador(cuerpo)).build());
         if (!exito(resp)) {
@@ -97,36 +122,59 @@ public class ApiClient {
         return gson.fromJson(resp.body(), clazz);
     }
 
-    /** POST cuyo único interés es si tuvo éxito (2xx). */
+    /**
+     * Ejecutar una petición POST con cuerpo JSON sin importar la respuesta.
+     * @param path la ruta relativa del endpoint a invocar.
+     * @param cuerpo el objeto a serializar como cuerpo JSON, puede ser null.
+     * @return true si la respuesta es 2xx, false en caso contrario.
+     */
     public boolean postOk(String path, Object cuerpo) {
         return exito(enviar(peticion(path).POST(publicador(cuerpo)).build()));
     }
 
-    /** PATCH que devuelve {@code true} si la respuesta es 2xx. */
+    /**
+     * Ejecutar una petición PATCH con cuerpo JSON sin importar la respuesta.
+     * @param path la ruta relativa del endpoint a invocar.
+     * @param cuerpo el objeto a serializar como cuerpo JSON, puede ser null.
+     * @return true si la respuesta es 2xx, false en caso contrario.
+     */
     public boolean patchOk(String path, Object cuerpo) {
         return exito(enviar(peticion(path).method("PATCH", publicador(cuerpo)).build()));
     }
 
-    /** PUT que devuelve {@code true} si la respuesta es 2xx. */
+    /**
+     * Ejecutar una petición PUT con cuerpo JSON sin importar la respuesta.
+     * @param path la ruta relativa del endpoint a invocar.
+     * @param cuerpo el objeto a serializar como cuerpo JSON, puede ser null.
+     * @return true si la respuesta es 2xx, false en caso contrario.
+     */
     public boolean putOk(String path, Object cuerpo) {
         return exito(enviar(peticion(path).PUT(publicador(cuerpo)).build()));
     }
 
-    /** DELETE que devuelve {@code true} si la respuesta es 2xx. */
+    /**
+     * Ejecutar una petición DELETE sobre el endpoint indicado.
+     * @param path la ruta relativa del endpoint a invocar.
+     * @return true si la respuesta es 2xx, false en caso contrario.
+     */
     public boolean delete(String path) {
         return exito(enviar(peticion(path).DELETE().build()));
     }
 
     // ===================== Utilidades ===================== //
 
-    /** Codifica un segmento de ruta (espacios y caracteres reservados). */
+    /**
+     * Codificar un segmento de ruta escapando espacios y caracteres reservados.
+     * @param segmento el segmento de URL a codificar.
+     * @return el segmento codificado en UTF-8.
+     */
     public static String enc(String segmento) {
         return URLEncoder.encode(segmento, StandardCharsets.UTF_8).replace("+", "%20");
     }
 
     /**
-     * @return la URL base de la API (sin barra final),
-     *         p.ej. {@code http://172.27.250.2:8080/api}
+     * Obtener la URL base configurada para la API REST.
+     * @return la URL base sin barra final, p.ej. http://172.27.250.2:8080/api
      */
     public static String getBaseUrl() {
         return BASE_URL;
