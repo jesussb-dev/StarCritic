@@ -1,0 +1,10 @@
+target/
+src/main/resources/config.properties
+*.class
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+/nbproject/
