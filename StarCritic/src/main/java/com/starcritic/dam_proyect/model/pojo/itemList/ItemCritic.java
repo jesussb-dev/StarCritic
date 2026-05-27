@@ -7,8 +7,11 @@ package com.starcritic.dam_proyect.model.pojo.itemList;
 import com.starcritic.dam_proyect.model.pojo.bd.Roles;
 
 /**
+ * Item de la lista de críticas listo para pintar con {@link ItemCriticRender}.
+ * Aplana autor, rol, texto y puntuación junto con la marca de crítico
+ * verificado.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class ItemCritic {
     private int idCritica;

@@ -8,8 +8,10 @@ import com.starcritic.dam_proyect.model.pojo.itemList.ItemCritic;
 import java.util.List;
 
 /**
+ * Wrapper que agrupa una lista de críticas a renderizar junto con su media
+ * de puntuación calculada.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class MediaConItems {
     private List<ItemCritic> items;

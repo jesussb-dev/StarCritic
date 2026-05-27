@@ -11,6 +11,8 @@ import javax.swing.ListCellRenderer;
 /**
  * Tarjetas de críticas con estilo cinematográfico oscuro.
  * Críticos verificados reciben un fondo dorado oscuro con borde ámbar.
+ *
+ * @author Jesús Santos Baquero
  */
 public class ItemCriticRender extends JLabel implements ListCellRenderer<ItemCritic> {
 

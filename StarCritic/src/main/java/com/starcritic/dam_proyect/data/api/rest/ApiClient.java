@@ -9,6 +9,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -18,22 +19,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Properties;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 
 /**
- * Cliente HTTP único frente a la API REST del backend (StarCritic_Server).
- * Centraliza la URL base, un {@link Gson} con adaptadores de fecha y los verbos
- * HTTP más usados envueltos en métodos de conveniencia
- * ({@link #getObject}, {@link #postObject}, {@link #delete}…).
- *
- * <p>Las clases {@code *DB} obtienen la instancia compartida con {@link #get()}.
- * Convención de errores: los fallos de red se propagan como {@link ApiException}
- * (sin comprobar) hasta el callback de error de {@code BackgroundWork}; las
- * respuestas con código distinto de 2xx devuelven {@code null} (objetos) o
- * {@code false} (operaciones), sin lanzar.</p>
- *
  * @author Jesús Santos Baquero
  */
 public class ApiClient {
@@ -51,7 +44,38 @@ public class ApiClient {
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .create();
-        this.client = HttpClient.newHttpClient();
+        this.client = HttpClient.newBuilder()
+                .sslContext(buildSslContext())
+                .build();
+    }
+
+    /**
+     * Construir un {@link SSLContext} que confie en el certificado autofirmado
+     * del backend StarCritic_Server. El truststore PKCS12 se lee del path
+     * indicado en {@code config.properties}.
+     * @return un {@link SSLContext} cargado con el truststore configurado.
+     */
+    private static SSLContext buildSslContext() {
+        String keystorePath = getProperty("TRUSTSTORE_PATH");
+        char[] password = getProperty("TRUSTSTORE_PASSWORD").toCharArray();
+        try {
+            // 1) Cargar el keystore PKCS12 desde disco
+            KeyStore ks = KeyStore.getInstance("PKCS12");
+            try (InputStream is = new FileInputStream(keystorePath)) {
+                ks.load(is, password);
+            }
+
+            // 2) Preparar los TrustManagers (validan el cert del servidor)
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            tmf.init(ks);
+
+            // 3) Crear SSLContext
+            SSLContext ctx = SSLContext.getInstance("TLS");
+            ctx.init(null, tmf.getTrustManagers(), null);
+            return ctx;
+        } catch (Exception ex) {
+            throw new ApiException("Error al inicializar el truststore HTTPS", ex);
+        }
     }
 
     /**
@@ -174,7 +198,7 @@ public class ApiClient {
 
     /**
      * Obtener la URL base configurada para la API REST.
-     * @return la URL base sin barra final, p.ej. http://172.27.250.2:8080/api
+     * @return la URL base sin barra final, p.ej. https://starcritic-server:8443/api
      */
     public static String getBaseUrl() {
         return BASE_URL;

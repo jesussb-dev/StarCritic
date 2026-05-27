@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Vista unificada para añadir y modificar contenido LOCAL.
  * Usar setTitleLabelText() y setConfirmButtonText() para adaptar el modo.
  *
- * @author JESUS SB
+ * @author Jesús Santos Baquero
  */
 public class ModifyContentDialog extends javax.swing.JDialog {
 

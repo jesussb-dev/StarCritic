@@ -9,8 +9,11 @@ import com.starcritic.dam_proyect.data.api.service.RAWGService;
 import com.starcritic.dam_proyect.model.pojo.bd.UsuarioRegistrado;
 
 /**
+ * Modelo compartido por toda la aplicación. Mantiene la sesión del usuario
+ * y las fachadas hacia los servicios externos OMDb y RAWG (que en esta
+ * versión cliente delegan en el backend StarCritic_Server).
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class Model {
     private UsuarioRegistrado user;

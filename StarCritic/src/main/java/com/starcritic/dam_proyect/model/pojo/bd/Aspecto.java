@@ -7,8 +7,11 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 import java.util.Objects;
 
 /**
+ * Aspecto evaluable de un contenido (p.ej. guion, jugabilidad, banda
+ * sonora). Cada aspecto pertenece a una categoría que restringe el tipo de
+ * contenido al que aplica.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class Aspecto {
 

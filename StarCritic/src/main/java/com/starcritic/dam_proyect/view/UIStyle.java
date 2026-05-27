@@ -33,6 +33,8 @@ import javax.swing.border.EmptyBorder;
 /**
  * Sistema de diseño cinematográfico oscuro para Star Critic.
  * Paleta dorada sobre fondos oscuros — todos los diálogos comparten esta apariencia.
+ *
+ * @author Jesús Santos Baquero
  */
 public final class UIStyle {
 

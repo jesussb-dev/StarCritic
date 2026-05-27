@@ -6,8 +6,9 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 
 
 /**
+ * Roles posibles de un usuario registrado dentro del sistema.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
     public enum Roles{ADMINISTRADOR,ESTANDAR};
 

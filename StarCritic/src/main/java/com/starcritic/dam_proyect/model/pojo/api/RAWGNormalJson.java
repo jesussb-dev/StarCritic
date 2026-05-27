@@ -8,8 +8,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
+ * Item de los resultados de RAWG con los datos básicos de un videojuego
+ * (id, slug, nombre, fecha, imagen, valoración, géneros y plataformas).
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class RAWGNormalJson {
     

@@ -5,8 +5,9 @@
 package com.starcritic.dam_proyect.model.pojo.bd;
 
 /**
+ * Estado de la solicitud de certificación de un usuario como crítico oficial.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public enum EstadoCertificacion {
     NO_SOLICITADA("NO SOLICITADA"),

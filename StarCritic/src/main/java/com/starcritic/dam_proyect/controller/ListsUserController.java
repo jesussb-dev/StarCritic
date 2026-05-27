@@ -147,9 +147,9 @@ public class ListsUserController extends BaseController<ListsUserDialog> {
                 File archivo = chooser.getSelectedFile();
                 BackgroundWork.run(
                         () -> {
-                            ListaUsuario lista = new ListaUsuario(model.getUser().getIdUsuario(), archivo.getName(), LocalDate.now());
-                            ListaUsuarioDB.crearListaUsuario(lista);
                             String nombre = archivo.getName().substring(0, archivo.getName().lastIndexOf('.'));
+                            ListaUsuario lista = new ListaUsuario(model.getUser().getIdUsuario(), nombre, LocalDate.now());
+                            ListaUsuarioDB.crearListaUsuario(lista);
                             for (String[] dato : CsvImport.importarCsv(archivo.getAbsolutePath())) {
                                 ListaContenidoDB.anadirContenidoALista(model.getUser().getIdUsuario(), nombre, Integer.parseInt(dato[0]));
                             }

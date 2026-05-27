@@ -12,8 +12,10 @@ import javax.swing.JLabel;
 import org.jfree.chart.ChartPanel;
 
 /**
+ * Diálogo de estadísticas globales del catálogo. Pinta los gráficos
+ * generados con JFreeChart.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class StatsDialog extends javax.swing.JDialog {
 

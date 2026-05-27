@@ -2,6 +2,12 @@ package com.starcritic.dam_proyect.model.pojo.itemList;
 
 import java.time.LocalDateTime;
 
+/**
+ * Item de la bandeja de entrada listo para pintar con
+ * {@link ItemMessageRender}. Encapsula los datos del mensaje y del remitente.
+ *
+ * @author Jesús Santos Baquero
+ */
 public class ItemMessage {
 
     private int idMensaje;

@@ -8,8 +8,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
+ * Respuesta paginada de la API RAWG con la lista de videojuegos y los
+ * enlaces de paginación.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class RAWGListNormal {
 

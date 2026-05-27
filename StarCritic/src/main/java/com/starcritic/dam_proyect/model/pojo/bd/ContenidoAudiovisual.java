@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
+ * Contenido audiovisual (película o serie) del catálogo. Añade el
+ * identificador IMDb a los datos comunes de {@link Contenido}.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class ContenidoAudiovisual extends Contenido {
 

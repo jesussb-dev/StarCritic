@@ -8,8 +8,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
+ * Ficha detallada de una película o serie devuelta por OMDb.
+ * Los getters traducen el "N/A" de OMDb a null para simplificar la UI.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class OMDbDetailJson {
     @SerializedName("Title")        private String title;

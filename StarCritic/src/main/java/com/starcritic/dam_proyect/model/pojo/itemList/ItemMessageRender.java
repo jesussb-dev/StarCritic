@@ -12,7 +12,9 @@ import javax.swing.ListCellRenderer;
 /**
  * Tarjetas de mensajes al estilo cinematográfico oscuro.
  * Los mensajes sin leer reciben fondo dorado oscuro con borde ámbar,
- * espejo del tratamiento "crítico verificado" en ItemCriticRender.
+ * espejo del tratamiento "crítico verificado" en {@link ItemCriticRender}.
+ *
+ * @author Jesús Santos Baquero
  */
 public class ItemMessageRender extends JLabel implements ListCellRenderer<ItemMessage> {
 

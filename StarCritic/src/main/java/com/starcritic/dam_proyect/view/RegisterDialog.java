@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 /**
+ * Diálogo de registro de un nuevo usuario con campos para nombre, email,
+ * contraseña y confirmación, además de selector de avatar.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class RegisterDialog extends javax.swing.JDialog {
     

@@ -7,8 +7,10 @@ package com.starcritic.dam_proyect.view;
 import java.awt.event.ActionListener;
 
 /**
+ * Diálogo de perfil del usuario: muestra y permite editar avatar, nombre y
+ * correo electrónico, así como solicitar la certificación de crítico.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class ProfileDialog extends javax.swing.JDialog {
     

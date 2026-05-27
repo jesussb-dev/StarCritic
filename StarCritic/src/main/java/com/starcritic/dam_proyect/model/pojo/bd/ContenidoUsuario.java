@@ -8,8 +8,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
+ * Relación entre un usuario y un contenido visitado. Guarda la última
+ * fecha de visita y el contador acumulado para alimentar el motor de
+ * recomendaciones.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class ContenidoUsuario {
  

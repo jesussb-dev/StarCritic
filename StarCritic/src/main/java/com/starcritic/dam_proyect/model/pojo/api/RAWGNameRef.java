@@ -5,8 +5,10 @@
 package com.starcritic.dam_proyect.model.pojo.api;
 
 /**
+ * Referencia genérica id/nombre/slug que devuelve la API RAWG en colecciones
+ * como géneros, plataformas o desarrolladores.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class RAWGNameRef {
 

@@ -5,8 +5,10 @@
 package com.starcritic.dam_proyect.model.pojo.api;
 
 /**
+ * Envoltorio del objeto plataforma anidado que RAWG devuelve dentro de
+ * cada item, para aplanar el acceso al nombre real.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class RAWGPlatformWrapper {
     private RAWGNameRef platform;

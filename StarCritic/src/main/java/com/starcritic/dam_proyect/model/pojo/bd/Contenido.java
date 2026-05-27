@@ -4,8 +4,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
+ * Clase base de un contenido del catálogo (audiovisual o videojuego). Las
+ * subclases {@link ContenidoAudiovisual} y {@link Videojuego} añaden los
+ * identificadores externos específicos.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class Contenido {
 

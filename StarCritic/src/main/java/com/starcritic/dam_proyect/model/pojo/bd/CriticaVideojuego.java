@@ -7,8 +7,10 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 import java.util.Objects;
 
 /**
+ * Crítica de un videojuego. Asocia la crítica con el videojuego concreto
+ * al que aplica.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class CriticaVideojuego extends CriticaConAspecto {
 

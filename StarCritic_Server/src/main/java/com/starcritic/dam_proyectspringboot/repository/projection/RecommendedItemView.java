@@ -18,9 +18,9 @@ public class RecommendedItemView {
     public RecommendedItemView() {
     }
 
-    public RecommendedItemView(Long idContenido, String titulo, String posterKey,
+    public RecommendedItemView(Number idContenido, String titulo, String posterKey,
                                String apiId, String origen, String tipoContenido, Number score) {
-        this.idContenido = idContenido;
+        this.idContenido = (idContenido == null) ? null : idContenido.longValue();
         this.titulo = titulo;
         this.posterKey = posterKey;
         this.apiId = apiId;

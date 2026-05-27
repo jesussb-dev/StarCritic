@@ -8,8 +8,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
+ * Usuario que ha solicitado la acreditación como crítico oficial. Añade
+ * el PDF de certificación y el estado actual de la solicitud al perfil
+ * estándar de {@link UsuarioRegistrado}.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class Critico extends UsuarioRegistrado{
     private String certificacion;

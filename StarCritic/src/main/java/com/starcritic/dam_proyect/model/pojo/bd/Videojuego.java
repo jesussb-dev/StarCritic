@@ -3,8 +3,10 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
+ * Videojuego del catálogo. Añade el identificador de RAWG a los datos
+ * comunes de {@link Contenido}.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class Videojuego extends Contenido {
 

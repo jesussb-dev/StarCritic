@@ -7,8 +7,10 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 import java.util.Objects;
 
 /**
+ * Crítica de una película o serie. Asocia la crítica con el contenido
+ * audiovisual concreto al que aplica.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class CriticaAudiovisual extends CriticaConAspecto {
 

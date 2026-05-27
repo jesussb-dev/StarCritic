@@ -3,6 +3,12 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 import com.starcritic.dam_proyect.model.pojo.itemList.ItemContent;
 import java.util.List;
 
+/**
+ * Resultado paginado de una búsqueda: la lista de elementos a mostrar y el
+ * número total de páginas disponibles.
+ *
+ * @author Jesús Santos Baquero
+ */
 public class SearchResult {
 
     private List<ItemContent> items;

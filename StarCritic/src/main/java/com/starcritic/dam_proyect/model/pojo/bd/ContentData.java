@@ -5,8 +5,10 @@
 package com.starcritic.dam_proyect.model.pojo.bd;
 
 /**
+ * DTO inmutable que agrupa los datos necesarios para pintar la ficha de un
+ * contenido en {@link com.starcritic.dam_proyect.view.CompleteItemDialog}.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class ContentData {
     

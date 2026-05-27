@@ -7,8 +7,10 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 import java.util.Objects;
 
 /**
+ * Asociación entre una lista personal de un usuario y un contenido del catálogo.
+ * Representa la fila (usuario, nombreLista, contenido).
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class ListaContenido {
  

@@ -8,8 +8,10 @@ import com.starcritic.dam_proyect.model.pojo.bd.ListaUsuario;
 import java.util.List;
 
 /**
+ * Estado precargado del diálogo "Añadir a lista": listas del usuario y si existe
+ * alguna lista en la que el contenido todavía no figura.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class SaveListState {
     

@@ -15,8 +15,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
 /**
+ * Diálogo de búsqueda de contenidos con filtros por tipo y origen
+ * (OMDb, RAWG o catálogo local) y resultados paginados.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class SearchDialog extends javax.swing.JDialog {
     

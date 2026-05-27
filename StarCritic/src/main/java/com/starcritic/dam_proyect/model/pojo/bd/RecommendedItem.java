@@ -3,6 +3,8 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 /**
  * DTO ligero para el algoritmo de recomendaciones.
  * apiId es null para contenido LOCAL; en ese caso se usa idContenido para navegar al detalle.
+ *
+ * @author Jesús Santos Baquero
  */
 public class RecommendedItem {
 

@@ -7,8 +7,10 @@ package com.starcritic.dam_proyect.view;
 import javax.swing.ImageIcon;
 
 /**
+ * Diálogo visor de PDF para previsualizar los informes exportados con
+ * JasperReports antes de guardarlos en disco.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class PDFViewerDialog extends javax.swing.JDialog {
     

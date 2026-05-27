@@ -7,8 +7,10 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 import java.time.LocalDateTime;
 
 /**
+ * Mensaje intercambiado entre dos usuarios. Incluye asunto, cuerpo y
+ * marca de lectura para el sistema de mensajería interna.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class Mensaje {
     private int idMensaje;

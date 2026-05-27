@@ -7,8 +7,10 @@ package com.starcritic.dam_proyect.model.pojo.api;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Puntuación de un contenido en OMDb (fuente y valor), por ejemplo
+ * "Internet Movie Database: 8.7/10".
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class OMDbRating {
     @SerializedName("Source") private String source;

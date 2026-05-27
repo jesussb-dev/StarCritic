@@ -8,8 +8,10 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
+ * Lista personal creada por un usuario. La identifica el par
+ * (idUsuarioRegistrado, nombreLista).
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class ListaUsuario {
  

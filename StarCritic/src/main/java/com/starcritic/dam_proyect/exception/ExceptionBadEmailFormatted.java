@@ -5,8 +5,10 @@
 package com.starcritic.dam_proyect.exception;
 
 /**
+ * Excepción comprobada lanzada por {@link ValidateEmail} cuando el formato
+ * del email introducido no es válido.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class ExceptionBadEmailFormatted extends Exception {
     

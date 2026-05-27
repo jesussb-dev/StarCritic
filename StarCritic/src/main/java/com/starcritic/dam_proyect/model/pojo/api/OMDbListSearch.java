@@ -8,8 +8,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
+ * Respuesta de la búsqueda paginada de OMDb: lista de coincidencias y
+ * número total de resultados disponibles.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class OMDbListSearch {
     @SerializedName("Search")

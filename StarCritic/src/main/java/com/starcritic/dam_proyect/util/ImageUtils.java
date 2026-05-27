@@ -5,11 +5,24 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
+/**
+ * Utilidades de manipulación de imágenes para los renderers de la UI.
+ *
+ * @author Jesús Santos Baquero
+ */
 public final class ImageUtils {
 
     private ImageUtils() {
     }
 
+    /**
+     * Escalar una imagen a las dimensiones indicadas aplicando interpolación
+     * bilineal y máxima calidad de rendering.
+     * @param src la imagen origen a escalar.
+     * @param w el ancho destino en píxeles.
+     * @param h el alto destino en píxeles.
+     * @return una nueva {@link BufferedImage} ARGB con la imagen escalada.
+     */
     public static BufferedImage scale(Image src, int w, int h) {
         BufferedImage scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = scaled.createGraphics();

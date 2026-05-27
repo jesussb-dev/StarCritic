@@ -13,6 +13,8 @@ import javax.swing.border.Border;
 /**
  * Tarjetas de contenido con estilo cinematográfico oscuro.
  * Borde dorado al seleccionar, fondo oscuro alterno entre filas.
+ *
+ * @author Jesús Santos Baquero
  */
 public class ItemContentRender extends JLabel implements ListCellRenderer<ItemContent> {
 

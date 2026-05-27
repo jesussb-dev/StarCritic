@@ -7,8 +7,11 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 import java.util.Objects;
 
 /**
+ * Crítica base hecha por un usuario sobre un contenido. Las subclases
+ * {@link CriticaAudiovisual} y {@link CriticaVideojuego} añaden los campos
+ * específicos de cada tipo de contenido.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class Critica {
  

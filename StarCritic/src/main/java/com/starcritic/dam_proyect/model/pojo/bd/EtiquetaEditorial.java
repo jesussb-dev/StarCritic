@@ -2,6 +2,13 @@ package com.starcritic.dam_proyect.model.pojo.bd;
 
 import java.util.Objects;
 
+/**
+ * Etiqueta editorial que la redacción asigna a un contenido para
+ * clasificarlo o destacarlo (p.ej. "Recomendado por la crítica",
+ * "Clásicos").
+ *
+ * @author Jesús Santos Baquero
+ */
 public class EtiquetaEditorial {
 
     private int idEtiqueta;

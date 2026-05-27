@@ -13,8 +13,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
+ * Item de la lista de contenidos listo para pintar con
+ * {@link ItemContentRender}. Encapsula texto, poster ya escalado, id y
+ * origen para que la vista no tenga que cargar imágenes.
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class ItemContent {
 

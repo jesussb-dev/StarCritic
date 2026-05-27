@@ -8,8 +8,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
+ * Usuario registrado en StarCritic. Mantiene credenciales, datos personales,
+ * avatar y rol; los administradores son superusuarios y los críticos
+ * acreditados tienen su crítica destacada en la ficha.
  *
- * @author jsb
+ * @author Jesús Santos Baquero
  */
 public class UsuarioRegistrado {
 

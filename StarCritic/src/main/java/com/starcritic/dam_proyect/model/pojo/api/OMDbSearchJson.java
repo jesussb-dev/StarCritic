@@ -7,8 +7,9 @@ package com.starcritic.dam_proyect.model.pojo.api;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Item de los resultados de búsqueda de OMDb (título, año, imdbID, tipo, póster).
  *
- * @author jsanbaq
+ * @author Jesús Santos Baquero
  */
 public class OMDbSearchJson {
     
