@@ -45,7 +45,12 @@ public class RegisterUserController extends BaseController<RegisterDialog> {
                             "Error de usuario", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
+                try{
+                    ValidateEmail.validate(view.getEmail().trim());
+                } catch (ExceptionBadEmailFormatted ex) {
+                    JOptionPane.showMessageDialog(view, "El email esta mal formado", "Operación fallida", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 String[] apellidos = view.getSecondName().trim().split("\\s+");
                 UsuarioRegistrado user = new UsuarioRegistrado(view.getNameUser().trim(), view.getEmail(), LocalDate.now(), view.getName().trim(),
                         apellidos[0], apellidos.length > 1 ? apellidos[1] : null, Roles.ESTANDAR, view.getRepeatPassword().replaceAll("[\\[\\], \\s]+", "").trim(), false);

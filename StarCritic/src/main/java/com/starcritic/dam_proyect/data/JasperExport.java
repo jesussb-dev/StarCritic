@@ -76,14 +76,17 @@ public class JasperExport {
             parameters.put("nombreContenido", nombreContenido);
 
             JasperPrint print = JasperFillManager.fillReport(report, parameters, construirDatasource());
-            if (type.equals("pdf")) {
+            // Comparación tolerante (mayúsculas/espacios/null): cualquier selección
+            // de PDF debe guardar siempre un PDF, no caer silenciosamente a CSV.
+            if (type != null && type.trim().equalsIgnoreCase("pdf")) {
                 JasperExportManager.exportReportToPdfFile(
                         print,
                         currentDirectory + "/Listas/Lista_" + nombreLista + "_" + id_Usuario + ".pdf"
                 );
-                JasperViewer.viewReport(print, false);
+                // El visor es Swing: abrirlo en el EDT (este método corre en hilo de fondo).
+                java.awt.EventQueue.invokeLater(() -> JasperViewer.viewReport(print, false));
             } else {
-                exportToCsv(print, currentDirectory + "/Listas/Lista" + nombreLista + "_" + id_Usuario + ".csv");
+                exportToCsv(print, currentDirectory + "/Listas/Lista_" + nombreLista + "_" + id_Usuario + ".csv");
             }
         } catch (IOException | JRException ex) {
             Logger.getLogger(JasperExport.class.getName()).log(Level.SEVERE, null, ex);

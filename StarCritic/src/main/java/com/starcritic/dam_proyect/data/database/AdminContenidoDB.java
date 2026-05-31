@@ -3,7 +3,7 @@ package com.starcritic.dam_proyect.data.database;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.starcritic.dam_proyect.data.api.rest.ApiClient;
-import com.starcritic.dam_proyect.data.cloudfare.CloudeClient;
+import com.starcritic.dam_proyect.data.api.rest.ArchivoApi;
 import com.starcritic.dam_proyect.model.pojo.bd.Contenido;
 import com.starcritic.dam_proyect.model.pojo.bd.ContenidoAudiovisual;
 import com.starcritic.dam_proyect.model.pojo.bd.Origen;
@@ -81,14 +81,12 @@ public class AdminContenidoDB {
 
     /**
      * Dar de alta un contenido de origen LOCAL, subiendo opcionalmente el
-     * póster a R2 (Cloudflare) antes de crearlo.
-     * @param cloud el cliente de Cloudflare para subir el póster.
+     * póster a R2 (Cloudflare, vía el servidor) antes de crearlo.
      * @param contenido el contenido a crear (debe tener titulo y tipo).
      * @param posterFile el archivo del póster a subir, puede ser null (sin póster).
      * @return true si la operación fue exitosa, false en caso contrario.
      */
-    public static boolean crearContenidoLocal(CloudeClient cloud,
-            Contenido contenido, File posterFile) {
+    public static boolean crearContenidoLocal(Contenido contenido, File posterFile) {
         if (contenido.getTitulo() == null || contenido.getTitulo().isBlank()
                 || contenido.getTipoContenido() == null) {
             System.err.println("Contenido LOCAL requiere titulo y tipo");
@@ -98,9 +96,10 @@ public class AdminContenidoDB {
         if (contenido.getSinopsis() == null) {
             contenido.setSinopsis("");
         }
-        if (posterFile != null && cloud != null) {
+        if (posterFile != null) {
             try {
-                contenido.setPosterKey(cloud.subirArchivo(posterFile, detectarContentType(posterFile)));
+                contenido.setPosterKey(ArchivoApi.subir(posterFile,
+                        ArchivoApi.Bucket.CONTENIDO_LOCAL, detectarContentType(posterFile)));
             } catch (Exception ex) {
                 System.err.println("Error subiendo poster a R2");
                 ex.printStackTrace();
@@ -116,20 +115,19 @@ public class AdminContenidoDB {
     /**
      * Actualizar título, sinopsis, fecha y opcionalmente el póster de un
      * contenido de origen LOCAL.
-     * @param cloud el cliente de Cloudflare para subir el nuevo póster.
      * @param contenido el contenido con los datos actualizados (debe ser LOCAL).
      * @param nuevoPoster el archivo del nuevo póster, puede ser null para no cambiarlo.
      * @return true si la operación fue exitosa, false en caso contrario.
      */
-    public static boolean actualizarContenidoLocal(CloudeClient cloud,
-            Contenido contenido, File nuevoPoster) {
+    public static boolean actualizarContenidoLocal(Contenido contenido, File nuevoPoster) {
         if (contenido.getOrigen() != Origen.LOCAL) {
             System.err.println("Solo se puede editar contenido LOCAL con este metodo");
             return false;
         }
-        if (nuevoPoster != null && cloud != null) {
+        if (nuevoPoster != null) {
             try {
-                contenido.setPosterKey(cloud.subirArchivo(nuevoPoster, detectarContentType(nuevoPoster)));
+                contenido.setPosterKey(ArchivoApi.subir(nuevoPoster,
+                        ArchivoApi.Bucket.CONTENIDO_LOCAL, detectarContentType(nuevoPoster)));
             } catch (Exception ex) {
                 System.err.println("Error subiendo nuevo poster a R2");
                 ex.printStackTrace();
@@ -152,12 +150,11 @@ public class AdminContenidoDB {
     /**
      * Borrado físico de un contenido. Solo se permite sobre contenido LOCAL;
      * si el borrado en la base de datos es exitoso, tambien se elimina el
-     * póster asociado de Cloudflare R2.
+     * póster asociado de Cloudflare R2 (vía el servidor).
      * @param idContenido el identificador del contenido a eliminar.
-     * @param cloud el cliente de Cloudflare para eliminar el póster.
      * @return true si la operación fue exitosa, false en caso contrario.
      */
-    public static boolean hardDelete(int idContenido, CloudeClient cloud) {
+    public static boolean hardDelete(int idContenido) {
         if (!puedeHardDelete(idContenido)) {
             System.err.println("No se puede hard-delete el contenido " + idContenido
                     + ": no es LOCAL. Use softDelete.");
@@ -165,9 +162,9 @@ public class AdminContenidoDB {
         }
         String posterKey = obtenerPosterKey(idContenido);
         boolean ok = ApiClient.get().delete("/contenidos/" + idContenido);
-        if (ok && cloud != null && posterKey != null && !posterKey.isBlank()) {
+        if (ok && posterKey != null && !posterKey.isBlank()) {
             try {
-                cloud.eliminarArchivo(posterKey);
+                ArchivoApi.eliminar(ArchivoApi.Bucket.CONTENIDO_LOCAL, posterKey);
             } catch (Exception ex) {
                 System.err.println("Contenido eliminado de BD pero no se pudo borrar el poster de R2: " + ex.getMessage());
             }

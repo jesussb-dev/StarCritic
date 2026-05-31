@@ -1,7 +1,6 @@
 package com.starcritic.dam_proyect.controller;
 
 import com.starcritic.dam_proyect.data.BackgroundWork;
-import com.starcritic.dam_proyect.data.cloudfare.CloudeClient;
 import com.starcritic.dam_proyect.data.database.AdminContenidoDB;
 import com.starcritic.dam_proyect.model.Model;
 import com.starcritic.dam_proyect.model.pojo.bd.Contenido;
@@ -116,7 +115,7 @@ public class AdminContentController extends BaseController<AdminContentDialog> {
                                         "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                                 if (confirm == JOptionPane.YES_OPTION) {
                                     BackgroundWork.run(
-                                            () -> AdminContenidoDB.hardDelete(id, new CloudeClient(CloudeClient.Cubo.CONTENIDO_LOCAL)),
+                                            () -> AdminContenidoDB.hardDelete(id),
                                             ok -> {
                                                 if (ok) {
                                                     JOptionPane.showMessageDialog(view, "Contenido eliminado correctamente.",

@@ -143,8 +143,10 @@ public class MainNavigationController extends BaseController<MainNavigationFrame
                         () -> {
                             if (CriticoDB.esCritico(model.getUser().getIdUsuario())) {
                                 Critico critico = CriticoDB.obtenerCritico(model.getUser().getIdUsuario());
-                                if (EstadoCertificacion.PENDIENTE.equals(critico.getEstado()) || EstadoCertificacion.ACEPTADA.equals(critico.getEstado())) {
+                                if (EstadoCertificacion.PENDIENTE.equals(critico.getEstado())) {
                                     return "BLOCKED";
+                                }else if(EstadoCertificacion.ACEPTADA.equals(critico.getEstado())) {
+                                    return "DONE";
                                 }
                             } else {
                                 CriticoDB.anhadirCritico(model.getUser().getIdUsuario(), "", EstadoCertificacion.NO_SOLICITADA);
@@ -154,6 +156,8 @@ public class MainNavigationController extends BaseController<MainNavigationFrame
                         result -> {
                             if ("BLOCKED".equals(result)) {
                                 JOptionPane.showMessageDialog(view, "Ya está en proceso de validación su certificación", "Operación rechazada", JOptionPane.ERROR_MESSAGE);
+                            }else if("DONE".equals(result)){
+                                JOptionPane.showMessageDialog(view, "Ya se ha válidado este usuario", "Operación rechazada", JOptionPane.ERROR_MESSAGE);
                             } else {
                                 JFileChooser chooser = new JFileChooser();
                                 new FileChooserController(chooser, model);

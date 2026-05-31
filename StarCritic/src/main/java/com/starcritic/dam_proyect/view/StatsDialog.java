@@ -38,7 +38,7 @@ public class StatsDialog extends javax.swing.JDialog {
         getContentPane().setBackground(UIStyle.BG_PRIMARY);
         getContentPane().setLayout(new BorderLayout());
 
-        JLabel titleLabel = new JLabel("Estadísticas del usuario");
+        JLabel titleLabel = new JLabel("Estadísticas");
         UIStyle.styleTitle(titleLabel);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(18, 28, 10, 28));
         titleLabel.setForeground(UIStyle.ACCENT);

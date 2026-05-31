@@ -1,7 +1,6 @@
 package com.starcritic.dam_proyect.controller;
 
 import com.starcritic.dam_proyect.data.BackgroundWork;
-import com.starcritic.dam_proyect.data.cloudfare.CloudeClient;
 import com.starcritic.dam_proyect.data.database.AdminContenidoDB;
 import com.starcritic.dam_proyect.model.Model;
 import com.starcritic.dam_proyect.model.pojo.bd.Contenido;
@@ -82,7 +81,7 @@ public class AddContentController extends BaseController<ModifyContentDialog> {
                 Contenido contenido = new Contenido(LocalDate.now(), Origen.LOCAL, false, false, title, sinopsis, null, type);
 
                 BackgroundWork.run(
-                        () -> AdminContenidoDB.crearContenidoLocal(new CloudeClient(CloudeClient.Cubo.CONTENIDO_LOCAL), contenido, finalPosterFile),
+                        () -> AdminContenidoDB.crearContenidoLocal(contenido, finalPosterFile),
                         success -> {
                             if (success) {
                                 JOptionPane.showMessageDialog(view, "Contenido creado correctamente.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);

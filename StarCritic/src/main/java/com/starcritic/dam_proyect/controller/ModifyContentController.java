@@ -1,7 +1,6 @@
 package com.starcritic.dam_proyect.controller;
 
 import com.starcritic.dam_proyect.data.BackgroundWork;
-import com.starcritic.dam_proyect.data.cloudfare.CloudeClient;
 import com.starcritic.dam_proyect.data.database.AdminContenidoDB;
 import com.starcritic.dam_proyect.model.Model;
 import com.starcritic.dam_proyect.model.pojo.bd.Contenido;
@@ -78,15 +77,9 @@ public class ModifyContentController extends BaseController<ModifyContentDialog>
                 }
                 final File finalPosterFile = posterFile;
 
-                CloudeClient cloud = null;
-                if (finalPosterFile != null) {
-                    cloud = new CloudeClient(CloudeClient.Cubo.CONTENIDO_LOCAL);
-                }
-                final CloudeClient cloudFinal = cloud;
-
                 BackgroundWork.run(
                         () -> {
-                            return AdminContenidoDB.actualizarContenidoLocal(cloudFinal, contenido, finalPosterFile);
+                            return AdminContenidoDB.actualizarContenidoLocal(contenido, finalPosterFile);
                         },
                         success -> {
                             if (success) {

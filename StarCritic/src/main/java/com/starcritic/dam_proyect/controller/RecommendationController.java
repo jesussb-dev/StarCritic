@@ -1,7 +1,7 @@
 package com.starcritic.dam_proyect.controller;
 
 import com.starcritic.dam_proyect.data.BackgroundWork;
-import com.starcritic.dam_proyect.data.cloudfare.CloudeClient;
+import com.starcritic.dam_proyect.data.api.rest.ArchivoApi;
 import com.starcritic.dam_proyect.data.database.RecomendacionDB;
 import com.starcritic.dam_proyect.model.Model;
 import com.starcritic.dam_proyect.model.pojo.api.OMDbDetailJson;
@@ -29,18 +29,9 @@ import javax.swing.JOptionPane;
  */
 public class RecommendationController extends BaseController<MainNavigationFrame> {
 
-    private CloudeClient posterCloud;
-
     public RecommendationController(MainNavigationFrame view, Model model) {
         super(view, model);
         bindListeners();
-    }
-
-    private CloudeClient posterCloud() {
-        if (posterCloud == null) {
-            posterCloud = new CloudeClient(CloudeClient.Cubo.CONTENIDO_LOCAL);
-        }
-        return posterCloud;
     }
 
     /**
@@ -132,7 +123,7 @@ public class RecommendationController extends BaseController<MainNavigationFrame
                 return null;
             }
             try {
-                return posterCloud().urlPresignada(key, 60);
+                return ArchivoApi.urlPresignada(ArchivoApi.Bucket.CONTENIDO_LOCAL, key, 60);
             } catch (Exception ex) {
                 return null;
             }

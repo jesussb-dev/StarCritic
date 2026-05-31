@@ -1,7 +1,7 @@
 package com.starcritic.dam_proyect.controller;
 
 import com.starcritic.dam_proyect.data.BackgroundWork;
-import com.starcritic.dam_proyect.data.cloudfare.CloudeClient;
+import com.starcritic.dam_proyect.data.api.rest.ArchivoApi;
 import com.starcritic.dam_proyect.data.database.CriticoDB;
 import com.starcritic.dam_proyect.model.Model;
 import com.starcritic.dam_proyect.model.pojo.bd.Critico;
@@ -142,7 +142,7 @@ public class RevisionCertificationsController extends BaseController<SearchDialo
                 () -> {
                     String url = CriticoDB.obtenerCritico(id).getCertificacion();
                     String ruta = System.getProperty("user.dir") + "/Certificaciones/";
-                    return new CloudeClient().descargarArchivo(url, ruta);
+                    return ArchivoApi.descargar(ArchivoApi.Bucket.CERTIFICACIONES, url, ruta);
                 },
                 cert -> {
                     try {

@@ -10,7 +10,6 @@
         <maven.compiler.release>21</maven.compiler.release>
         <exec.mainClass>com.starcritic.dam_proyect.Main</exec.mainClass>
         <flatlaf.version>3.7.1</flatlaf.version>
-        <awssdk.version>2.44.4</awssdk.version>
     </properties>
     <dependencies>
         <dependency>
@@ -32,11 +31,6 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>s3</artifactId>
-            <version>${awssdk.version}</version>
         </dependency>
         <dependency>
             <groupId>net.sf.jasperreports</groupId>

@@ -3,7 +3,7 @@ package com.starcritic.dam_proyect.controller;
 import com.starcritic.dam_proyect.model.pojo.bd.SaveListState;
 import com.starcritic.dam_proyect.model.pojo.bd.ContentData;
 import com.starcritic.dam_proyect.data.BackgroundWork;
-import com.starcritic.dam_proyect.data.cloudfare.CloudeClient;
+import com.starcritic.dam_proyect.data.api.rest.ArchivoApi;
 import com.starcritic.dam_proyect.data.database.ContenidoDB;
 import com.starcritic.dam_proyect.data.database.ContenidoUsuarioDB;
 import com.starcritic.dam_proyect.data.database.EtiquetaEditorialDB;
@@ -244,7 +244,7 @@ public class CompleteItemController extends BaseController<CompleteItemDialog> {
             return null;
         }
         try {
-            return new CloudeClient(CloudeClient.Cubo.CONTENIDO_LOCAL).urlPresignada(posterKey, 60);
+            return ArchivoApi.urlPresignada(ArchivoApi.Bucket.CONTENIDO_LOCAL, posterKey, 60);
         } catch (Exception ex) {
             return null;
         }

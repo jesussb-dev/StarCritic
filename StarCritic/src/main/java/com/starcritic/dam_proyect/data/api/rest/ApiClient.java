@@ -9,7 +9,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -19,10 +19,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.KeyStore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
@@ -51,17 +55,20 @@ public class ApiClient {
 
     /**
      * Construir un {@link SSLContext} que confie en el certificado autofirmado
-     * del backend StarCritic_Server. El truststore PKCS12 se lee del path
-     * indicado en {@code config.properties}.
+     * del backend StarCritic_Server. El truststore PKCS12 se lee del classpath
+     * (carpeta {@code resources}), con el nombre indicado en {@code config.properties}.
      * @return un {@link SSLContext} cargado con el truststore configurado.
      */
     private static SSLContext buildSslContext() {
-        String keystorePath = getProperty("TRUSTSTORE_PATH");
+        String trustStoreName = getProperty("TRUSTSTORE_PATH");
         char[] password = getProperty("TRUSTSTORE_PASSWORD").toCharArray();
         try {
-            // 1) Cargar el keystore PKCS12 desde disco
+            // 1) Cargar el truststore PKCS12 desde el classpath (resources)
             KeyStore ks = KeyStore.getInstance("PKCS12");
-            try (InputStream is = new FileInputStream(keystorePath)) {
+            try (InputStream is = ApiClient.class.getClassLoader().getResourceAsStream(trustStoreName)) {
+                if (is == null) {
+                    throw new ApiException("No se encontró el truststore '" + trustStoreName + "' en el classpath");
+                }
                 ks.load(is, password);
             }
 
@@ -183,6 +190,86 @@ public class ApiClient {
      */
     public boolean delete(String path) {
         return exito(enviar(peticion(path).DELETE().build()));
+    }
+
+    /**
+     * Ejecutar una petición GET sobre un endpoint que devuelve texto plano.
+     * @param path la ruta relativa del endpoint a invocar.
+     * @return el cuerpo de la respuesta sin espacios sobrantes, o null si no es 2xx.
+     */
+    public String getString(String path) {
+        HttpResponse<String> resp = enviar(peticion(path).GET().build());
+        return exito(resp) ? resp.body().trim() : null;
+    }
+
+    /**
+     * Descargar un recurso binario del backend a un fichero local. No usa
+     * {@link #peticion} para evitar el {@code Accept: application/json} (que
+     * provocaría un 406 sobre una respuesta binaria).
+     * @param path la ruta relativa del endpoint a descargar.
+     * @param destino la ruta del fichero local donde se guardará el contenido.
+     * @return true si la respuesta es 2xx y el fichero se escribió, false si no.
+     */
+    public boolean descargarArchivo(String path, java.nio.file.Path destino) {
+        HttpRequest req = HttpRequest.newBuilder(URI.create(BASE_URL + path))
+                .header("Accept", "application/octet-stream")
+                .GET()
+                .build();
+        try {
+            HttpResponse<java.nio.file.Path> resp =
+                    client.send(req, HttpResponse.BodyHandlers.ofFile(destino));
+            return exito(resp);
+        } catch (IOException ex) {
+            throw new ApiException("Error al descargar: " + req.uri(), ex);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new ApiException("Descarga interrumpida: " + req.uri(), ex);
+        }
+    }
+
+    /**
+     * Subir un fichero mediante {@code multipart/form-data} en el campo "archivo".
+     * El {@link HttpClient} de Java no construye multipart, así que se arma el
+     * cuerpo a mano (no se usa {@link #peticion} porque fija Content-Type JSON).
+     * @param path la ruta relativa del endpoint de subida.
+     * @param archivo el fichero a enviar.
+     * @param contentType el tipo MIME del fichero (p.ej. "application/pdf").
+     * @return el cuerpo de la respuesta (la clave del objeto), o null si no es 2xx.
+     */
+    public String postMultipart(String path, File archivo, String contentType) {
+        String boundary = "----StarCritic" + UUID.randomUUID();
+        byte[] cuerpo;
+        try {
+            cuerpo = cuerpoMultipart(boundary, archivo, contentType);
+        } catch (IOException ex) {
+            throw new ApiException("No se pudo leer el archivo a subir: " + archivo, ex);
+        }
+        HttpRequest req = HttpRequest.newBuilder(URI.create(BASE_URL + path))
+                .header("Content-Type", "multipart/form-data; boundary=" + boundary)
+                .header("Accept", "text/plain")
+                .POST(HttpRequest.BodyPublishers.ofByteArray(cuerpo))
+                .build();
+        HttpResponse<String> resp = enviar(req);
+        return exito(resp) ? resp.body().trim() : null;
+    }
+
+    private static byte[] cuerpoMultipart(String boundary, File archivo, String contentType) throws IOException {
+        List<byte[]> partes = new ArrayList<>();
+        String cabecera = "--" + boundary + "\r\n"
+                + "Content-Disposition: form-data; name=\"archivo\"; filename=\"" + archivo.getName() + "\"\r\n"
+                + "Content-Type: " + contentType + "\r\n\r\n";
+        partes.add(cabecera.getBytes(StandardCharsets.UTF_8));
+        partes.add(Files.readAllBytes(archivo.toPath()));
+        partes.add(("\r\n--" + boundary + "--\r\n").getBytes(StandardCharsets.UTF_8));
+
+        int total = partes.stream().mapToInt(p -> p.length).sum();
+        byte[] cuerpo = new byte[total];
+        int pos = 0;
+        for (byte[] parte : partes) {
+            System.arraycopy(parte, 0, cuerpo, pos, parte.length);
+            pos += parte.length;
+        }
+        return cuerpo;
     }
 
     // ===================== Utilidades ===================== //

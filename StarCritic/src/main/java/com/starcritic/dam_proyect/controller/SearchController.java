@@ -98,7 +98,7 @@ public class SearchController extends BaseController<SearchDialog> {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (actualPage <= 1) {
-                    JOptionPane.showConfirmDialog(view, "Error de página", "Error: esta es la primera página", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(view, "Error de página", "Error: esta es la primera página", JOptionPane.ERROR_MESSAGE);
                 } else {
                     actualPage--;
                     view.clearList();

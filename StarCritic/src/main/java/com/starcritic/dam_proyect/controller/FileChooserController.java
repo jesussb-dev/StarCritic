@@ -1,7 +1,7 @@
 package com.starcritic.dam_proyect.controller;
 
 import com.starcritic.dam_proyect.data.BackgroundWork;
-import com.starcritic.dam_proyect.data.cloudfare.CloudeClient;
+import com.starcritic.dam_proyect.data.api.rest.ArchivoApi;
 import com.starcritic.dam_proyect.data.database.CriticoDB;
 import com.starcritic.dam_proyect.model.Model;
 import com.starcritic.dam_proyect.model.pojo.bd.Critico;
@@ -10,6 +10,7 @@ import com.starcritic.dam_proyect.view.UIStyle;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Controlador del diálogo de selección de archivo para subir la certificación
@@ -26,6 +27,8 @@ public class FileChooserController {
         this.chooser = chooser;
         this.model = model;
         chooser.setBackground(UIStyle.BG_PRIMARY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf"));
         manageFile();
     }
 
@@ -36,7 +39,7 @@ public class FileChooserController {
         BackgroundWork.run(
             () -> {
                 Critico critico = CriticoDB.obtenerCritico(model.getUser().getIdUsuario());
-                String rutaCertificacion = new CloudeClient().subirArchivo(archivo, "application/pdf");
+                String rutaCertificacion = ArchivoApi.subir(archivo, ArchivoApi.Bucket.CERTIFICACIONES, "application/pdf");
                 critico.setCertificacion(rutaCertificacion);
                 critico.setEstado(EstadoCertificacion.PENDIENTE);
                 CriticoDB.modificarCritico(critico);

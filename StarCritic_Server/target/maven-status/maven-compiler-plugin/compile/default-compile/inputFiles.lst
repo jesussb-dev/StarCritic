@@ -1,5 +1,7 @@
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/DAM_ProyectSpringBoot.java
+/home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/config/CloudflareR2Config.java
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/config/RestClientConfig.java
+/home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/controller/ArchivoController.java
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/controller/AspectoController.java
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/controller/ContenidoAudiovisualController.java
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/controller/ContenidoController.java
@@ -79,6 +81,7 @@
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/service/ListaContenidoService.java
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/service/ListaUsuarioService.java
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/service/MensajeService.java
+/home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/service/R2Service.java
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/service/RecomendacionService.java
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/service/UsuarioRegistradoService.java
 /home/jsb/NetBeansProjects/StarCritic_Server/src/main/java/com/starcritic/dam_proyectspringboot/service/VideojuegoService.java

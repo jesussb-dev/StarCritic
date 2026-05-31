@@ -79,9 +79,12 @@ public class UserCriticsController extends BaseController<CriticsDialog> {
                                             CriticaDB.eliminarCritica(idCritica);
                                             return null;
                                         },
-                                        v -> JOptionPane.showMessageDialog(view, "Se ha borrado correctamente la crítica", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE),
-                                        err -> JOptionPane.showMessageDialog(view, "Error al eliminar la crítica", "Error", JOptionPane.ERROR_MESSAGE)
-                                );
+                                        v -> {
+                                            JOptionPane.showMessageDialog(view, "Se ha borrado correctamente la crítica", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                            view.clearCriticas();
+                                            BackgroundWork.runVoid(() -> cargarCriticasDelAspectoSeleccionado(), ex -> JOptionPane.showMessageDialog(view, "Error al eliminar la crítica", "Error", JOptionPane.ERROR_MESSAGE));
+                                        }, 
+                                        err -> JOptionPane.showMessageDialog(view, "Error al eliminar la crítica", "Error", JOptionPane.ERROR_MESSAGE));
                             }
                         },
                         err -> JOptionPane.showMessageDialog(view, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE)
