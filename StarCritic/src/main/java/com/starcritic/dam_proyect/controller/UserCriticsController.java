@@ -12,7 +12,9 @@ import com.starcritic.dam_proyect.view.CriticsDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -97,9 +99,9 @@ public class UserCriticsController extends BaseController<CriticsDialog> {
     private void cargarAspectos() {
         BackgroundWork.run(
                 () -> {
-                    List<Aspecto> aspectos = AspectoDB.obtenerAspectosAudiovisual();
+                    Set<Aspecto> aspectos = new LinkedHashSet<>(AspectoDB.obtenerAspectosAudiovisual());
                     aspectos.addAll(AspectoDB.obtenerAspectosVideojuego());
-                    return aspectos;
+                    return new ArrayList<>(aspectos);
                 },
                 aspectos -> aspectos.forEach(view::addAspectItem),
                 err -> JOptionPane.showMessageDialog(view, "Error al añadir el contenido a la lista", "Error", JOptionPane.ERROR_MESSAGE));
