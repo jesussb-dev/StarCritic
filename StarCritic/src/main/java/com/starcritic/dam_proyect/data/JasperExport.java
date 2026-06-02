@@ -13,11 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -40,7 +36,12 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class JasperExport {
 
-    private static final String currentDirectory = System.getProperty("user.dir");
+    // El directorio de exportación se ancla al home del usuario, no a "user.dir".
+    // Al ejecutar el jar instalado (p. ej. desde el lanzador .desktop) el
+    // directorio de trabajo suele ser "/" o no escribible, de modo que los
+    // ficheros se perdían o la escritura fallaba silenciosamente. El home
+    // siempre es escribible y el usuario puede localizar la carpeta.
+    private static final String exportDirectory = System.getProperty("user.home") + "/StarCritic/Listas";
 
     private final String nombreLista;
     private final int id_Usuario;
@@ -56,40 +57,36 @@ public class JasperExport {
 
     /**
      * Exportar la lista de contenido a PDF o CSV. El fichero se guarda en
-     * {@code ./Listas/} con un nombre que incluye el nombre de la lista y el id
-     * del usuario. Si el tipo es "pdf", se abre el visor de Jasper.
+     * {@code ~/StarCritic/Listas/} con un nombre que incluye el nombre de la
+     * lista y el id del usuario. Si el tipo es "pdf", se abre el visor de Jasper.
+     *
+     * @return la ruta absoluta del fichero generado.
+     * @throws JRException si falla la compilación, el relleno o la exportación.
+     * @throws IOException si no se puede crear el directorio o escribir el fichero.
      */
-    public void exportList() {
-        try {
-            // La plantilla usa "Times New Roman"; en SOs sin esa fuente (Linux)
-            // JasperReports lanzaría JRFontNotFoundException. Sustituye por la
-            // fuente por defecto en su lugar.
-            JRPropertiesUtil.getInstance(DefaultJasperReportsContext.getInstance())
-                    .setProperty("net.sf.jasperreports.awt.ignore.missing.font", "true");
-            Files.createDirectories(Paths.get(currentDirectory + "/Listas"));
-            JasperReport report = JasperCompileManager.compileReport(
-                    JasperExport.class.getClassLoader().getResourceAsStream("Example.jrxml")
-            );
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("nombreLista", nombreLista);
-            parameters.put("id_Usuario", id_Usuario);
-            parameters.put("nombreContenido", nombreContenido);
+    public String exportList() throws JRException, IOException {
+        Files.createDirectories(Paths.get(exportDirectory));
+        JasperReport report = JasperCompileManager.compileReport(
+                JasperExport.class.getClassLoader().getResourceAsStream("Example.jrxml")
+        );
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("nombreLista", nombreLista);
+        parameters.put("id_Usuario", id_Usuario);
+        parameters.put("nombreContenido", nombreContenido);
 
-            JasperPrint print = JasperFillManager.fillReport(report, parameters, construirDatasource());
-            // Comparación tolerante (mayúsculas/espacios/null): cualquier selección
-            // de PDF debe guardar siempre un PDF, no caer silenciosamente a CSV.
-            if (type != null && type.trim().equalsIgnoreCase("pdf")) {
-                JasperExportManager.exportReportToPdfFile(
-                        print,
-                        currentDirectory + "/Listas/Lista_" + nombreLista + "_" + id_Usuario + ".pdf"
-                );
-                // El visor es Swing: abrirlo en el EDT (este método corre en hilo de fondo).
-                java.awt.EventQueue.invokeLater(() -> JasperViewer.viewReport(print, false));
-            } else {
-                exportToCsv(print, currentDirectory + "/Listas/Lista_" + nombreLista + "_" + id_Usuario + ".csv");
-            }
-        } catch (IOException | JRException ex) {
-            Logger.getLogger(JasperExport.class.getName()).log(Level.SEVERE, null, ex);
+        JasperPrint print = JasperFillManager.fillReport(report, parameters, construirDatasource());
+        // Comparación tolerante (mayúsculas/espacios/null): cualquier selección
+        // de PDF debe guardar siempre un PDF, no caer silenciosamente a CSV.
+        if (type != null && type.trim().equalsIgnoreCase("pdf")) {
+            String pdfPath = exportDirectory + "/Lista_" + nombreLista + "_" + id_Usuario + ".pdf";
+            JasperExportManager.exportReportToPdfFile(print, pdfPath);
+            // El visor es Swing: abrirlo en el EDT (este método corre en hilo de fondo).
+            java.awt.EventQueue.invokeLater(() -> JasperViewer.viewReport(print, false));
+            return pdfPath;
+        } else {
+            String csvPath = exportDirectory + "/Lista_" + nombreLista + "_" + id_Usuario + ".csv";
+            exportToCsv(print, csvPath);
+            return csvPath;
         }
     }
 

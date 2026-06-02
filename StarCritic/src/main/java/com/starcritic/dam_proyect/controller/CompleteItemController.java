@@ -129,14 +129,14 @@ public class CompleteItemController extends BaseController<CompleteItemDialog> {
                             () -> ContenidoDB.buscarID(id, type),
                             idContenido -> {
                                 CriticsDialog cd = new CriticsDialog(view, true);
-                                new CriticsController(cd, model, idContenido, type);
+                                new CriticsController(cd, model, idContenido, type, CompleteItemController.this);
                                 cd.setVisible(true);
                             },
                             err -> JOptionPane.showMessageDialog(view, "Error al cargar críticas", "Error", JOptionPane.ERROR_MESSAGE)
                     );
                 } else {
                     CriticsDialog cd = new CriticsDialog(view, true);
-                    new CriticsController(cd, model, idContenidoLocal, type);
+                    new CriticsController(cd, model, idContenidoLocal, type, CompleteItemController.this);
                     cd.setVisible(true);
                 }
             }
@@ -238,13 +238,28 @@ public class CompleteItemController extends BaseController<CompleteItemDialog> {
         );
     }
 
-    /** El póster LOCAL se guarda como clave de R2; se firma una URL temporal para mostrarlo. */
+    /**
+     * Recalcula y refresca la valoración general (aspecto 1) mostrada en la
+     * ficha. Lo invoca {@link CriticsController} cuando se añade o elimina una
+     * crítica, de modo que la media visible se mantenga sincronizada sin tener
+     * que reabrir el detalle.
+     * @param idContenido id en BD del contenido cuya media se recalcula.
+     */
+    public void refreshRating(int idContenido) {
+        BackgroundWork.run(
+                () -> ContenidoDB.mediaAspectoContenido(idContenido, 1, type),
+                media -> view.setRatingLabel("Valoración: " + media),
+                err -> { /* si falla el recálculo se mantiene la media anterior */ }
+        );
+    }
+
+    /** El póster LOCAL se guarda como clave de R2; se descarga a local y se muestra desde ahí. */
     private String resolvePosterLocal(String posterKey) {
         if (posterKey == null || posterKey.isBlank()) {
             return null;
         }
         try {
-            return ArchivoApi.urlPresignada(ArchivoApi.Bucket.CONTENIDO_LOCAL, posterKey, 60);
+            return ArchivoApi.descargar(ArchivoApi.Bucket.CONTENIDO_LOCAL, posterKey);
         } catch (Exception ex) {
             return null;
         }
@@ -282,7 +297,7 @@ public class CompleteItemController extends BaseController<CompleteItemDialog> {
             }
             sb.append(etiquetas.get(i).getNombre());
         }
-        return sb.toString();
+        return wrapLine(sb.toString());
     }
 
     private void registrarVisita(int idContenido) {
@@ -313,13 +328,33 @@ public class CompleteItemController extends BaseController<CompleteItemDialog> {
     private String formatGenresAndPlatforms(RAWGNormalJson item) {
         String generos = formatNames("Géneros", item.getGenres());
         String plataformas = formatPlatforms(item.getPlatforms());
+        String linea;
         if (generos.isEmpty()) {
-            return plataformas;
+            linea = plataformas;
+        } else if (plataformas.isEmpty()) {
+            linea = generos;
+        } else {
+            linea = generos + "  ·  " + plataformas;
         }
-        if (plataformas.isEmpty()) {
-            return generos;
+        return wrapLine(linea);
+    }
+
+    /**
+     * Envuelve la línea de metadatos en HTML con un ancho fijo para que el
+     * {@link javax.swing.JLabel} salte de línea cuando el texto (p. ej. una
+     * lista larga de plataformas) sea muy ancho, en lugar de deformar la ventana.
+     */
+    private String wrapLine(String text) {
+        if (text == null || text.isEmpty()) {
+            return text;
         }
-        return generos + "  ·  " + plataformas;
+        return "<html><div style='width:200px'>" + escapeHtml(text) + "</div></html>";
+    }
+
+    private String escapeHtml(String text) {
+        return text.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
     }
 
     private String formatNames(String prefix, List<RAWGNameRef> items) {

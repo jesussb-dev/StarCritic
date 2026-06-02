@@ -9,11 +9,10 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3Configuration;
-import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 /**
- * Expone el cliente y el presigner de Cloudflare R2 (API compatible con S3)
- * como beans. Las credenciales y el endpoint se leen de application.properties
+ * Expone el cliente de Cloudflare R2 (API compatible con S3) como bean. Las
+ * credenciales y el endpoint se leen de application.properties
  * ({@code cloudflare.*}), de modo que el secreto vive solo en el servidor.
  * @author Jesús Santos Baquero
  */
@@ -48,22 +47,6 @@ public class CloudflareR2Config {
                 .credentialsProvider(credenciales())
                 .region(Region.of("auto"))
                 .serviceConfiguration(serviceConfiguration)
-                .build();
-    }
-
-    /**
-     * Presigner S3 para generar URLs temporales de lectura.
-     * @return el {@link S3Presigner} configurado contra el endpoint de Cloudflare.
-     */
-    @Bean
-    public S3Presigner s3Presigner() {
-        return S3Presigner.builder()
-                .endpointOverride(URI.create(endpoint))
-                .credentialsProvider(credenciales())
-                .region(Region.of("auto"))
-                .serviceConfiguration(S3Configuration.builder()
-                        .pathStyleAccessEnabled(true)
-                        .build())
                 .build();
     }
 }

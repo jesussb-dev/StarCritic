@@ -53,10 +53,14 @@ public class ProfileController extends BaseController<ProfileDialog> {
                     }
                     UsuarioRegistrado user = (UsuarioRegistrado) model.getUser();
                     user.setNombreUsuario(view.getUser());
-                    user.setNombre(view.getName());
-                    String[] apellidos = view.getAddress().trim().split("\\s+", 2);
-                    user.setApellido1(apellidos.length > 0 ? apellidos[0] : "");
-                    user.setApellido2(apellidos.length > 1 ? apellidos[1] : "");
+                    // El campo "Nombre" contiene el nombre completo (nombre + apellidos);
+                    // se reparte en nombre/apellido1/apellido2. El campo "Dirección"
+                    // contiene el correo electrónico.
+                    String[] partes = view.getName().trim().split("\\s+", 3);
+                    user.setNombre(partes.length > 0 ? partes[0] : "");
+                    user.setApellido1(partes.length > 1 ? partes[1] : "");
+                    user.setApellido2(partes.length > 2 ? partes[2] : "");
+                    user.setCorreoElectronico(view.getAddress().trim());
                     BackgroundWork.run(
                             () -> UsuarioDB.modificarUsuarioRegistrado(user),
                             success -> {

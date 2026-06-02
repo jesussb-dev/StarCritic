@@ -123,7 +123,7 @@ public class RecommendationController extends BaseController<MainNavigationFrame
                 return null;
             }
             try {
-                return ArchivoApi.urlPresignada(ArchivoApi.Bucket.CONTENIDO_LOCAL, key, 60);
+                return ArchivoApi.descargar(ArchivoApi.Bucket.CONTENIDO_LOCAL, key);
             } catch (Exception ex) {
                 return null;
             }

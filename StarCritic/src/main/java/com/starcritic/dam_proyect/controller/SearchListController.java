@@ -1,6 +1,7 @@
 package com.starcritic.dam_proyect.controller;
 
 import com.starcritic.dam_proyect.data.BackgroundWork;
+import com.starcritic.dam_proyect.data.api.rest.ArchivoApi;
 import com.starcritic.dam_proyect.data.database.ContenidoDB;
 import com.starcritic.dam_proyect.data.database.ListaContenidoDB;
 import com.starcritic.dam_proyect.model.Model;
@@ -190,7 +191,7 @@ public class SearchListController extends BaseController<SearchDialog> {
                 || !contenido.getTitulo().toLowerCase().contains(filtro)) {
             return null;
         }
-        ItemContent item = new ItemContent(contenido.getTitulo(), loadIcon(contenido.getPosterKey()),
+        ItemContent item = new ItemContent(contenido.getTitulo(), loadLocalIcon(contenido.getPosterKey()),
                 String.valueOf(idDB), Origen.LOCAL);
         return new ListRow(idDB, contenido.getTipoContenido(), null, item);
     }
@@ -213,6 +214,21 @@ public class SearchListController extends BaseController<SearchDialog> {
         try {
             return new ImageIcon(new URI(url).toURL());
         } catch (URISyntaxException | MalformedURLException | IllegalArgumentException ex) {
+            return defaultIcon();
+        }
+    }
+
+    /**
+     * Carga el póster de un contenido LOCAL. La clave apunta al bucket de R2
+     * (contenido-local): el servidor sirve los bytes, se descargan a una carpeta
+     * temporal y la imagen se muestra desde el fichero descargado.
+     */
+    private ImageIcon loadLocalIcon(String posterKey) {
+        if (posterKey == null || posterKey.isBlank()) return defaultIcon();
+        try {
+            String uri = ArchivoApi.descargar(ArchivoApi.Bucket.CONTENIDO_LOCAL, posterKey);
+            return (uri != null) ? new ImageIcon(new URI(uri).toURL()) : defaultIcon();
+        } catch (Exception ex) {
             return defaultIcon();
         }
     }

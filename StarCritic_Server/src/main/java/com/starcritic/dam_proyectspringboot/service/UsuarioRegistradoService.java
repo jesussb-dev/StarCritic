@@ -47,22 +47,44 @@ public class UsuarioRegistradoService {
      */
     @Transactional
     public UsuarioRegistrado guardar(UsuarioRegistrado usuarioRegistrado) {
-        // El cliente envía idUsuario = 0 (int primitivo) al crear; se normaliza a
-        // null para que Spring Data haga INSERT (persist) en lugar de UPDATE (merge).
-        if (usuarioRegistrado.getIdUsuario() != null && usuarioRegistrado.getIdUsuario() == 0L) {
-            usuarioRegistrado.setIdUsuario(null);
-        }
-
+        Long id = usuarioRegistrado.getIdUsuario();
         String contrasenha = usuarioRegistrado.getContrasenha();
         boolean tieneContrasenha = contrasenha != null && !contrasenha.isBlank();
 
-        if (tieneContrasenha) {
-            usuarioRegistrado.setContrasenha(BCrypt.hashpw(contrasenha, BCrypt.gensalt(13)));
-        } else if (usuarioRegistrado.getIdUsuario() != null) {
-            usuarioRegistradoRepository.findById(usuarioRegistrado.getIdUsuario())
-                    .ifPresent(existente -> usuarioRegistrado.setContrasenha(existente.getContrasenha()));
+        // El cliente envía idUsuario = 0 (int primitivo) al crear: es un INSERT.
+        if (id == null || id == 0L) {
+            usuarioRegistrado.setIdUsuario(null);
+            if (tieneContrasenha) {
+                usuarioRegistrado.setContrasenha(BCrypt.hashpw(contrasenha, BCrypt.gensalt(13)));
+            }
+            return usuarioRegistradoRepository.save(usuarioRegistrado);
         }
-        return usuarioRegistradoRepository.save(usuarioRegistrado);
+
+        // Actualización: se carga la entidad gestionada (que respeta el subtipo
+        // real, p.ej. Critico) y se copian solo los campos editables. Evita el
+        // WrongClassException que ocurre al hacer merge() de un UsuarioRegistrado
+        // plano sobre una fila que en realidad es un Critico (herencia JOINED), y
+        // preserva los campos que el cliente no edita (rol, fechaCreacion, baneado).
+        return usuarioRegistradoRepository.findById(id)
+                .map(existente -> {
+                    existente.setNombreUsuario(usuarioRegistrado.getNombreUsuario());
+                    existente.setNombre(usuarioRegistrado.getNombre());
+                    existente.setApellido1(usuarioRegistrado.getApellido1());
+                    existente.setApellido2(usuarioRegistrado.getApellido2());
+                    existente.setCorreoElectronico(usuarioRegistrado.getCorreoElectronico());
+                    // Sin contraseña en el cuerpo se conserva la ya almacenada.
+                    if (tieneContrasenha) {
+                        existente.setContrasenha(BCrypt.hashpw(contrasenha, BCrypt.gensalt(13)));
+                    }
+                    return existente;
+                })
+                .orElseGet(() -> {
+                    usuarioRegistrado.setIdUsuario(null);
+                    if (tieneContrasenha) {
+                        usuarioRegistrado.setContrasenha(BCrypt.hashpw(contrasenha, BCrypt.gensalt(13)));
+                    }
+                    return usuarioRegistradoRepository.save(usuarioRegistrado);
+                });
     }
 
     /**

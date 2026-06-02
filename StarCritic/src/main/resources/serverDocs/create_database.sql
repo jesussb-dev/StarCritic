@@ -208,7 +208,7 @@ ALTER TABLE critica_audiovisual
 ALTER TABLE critica_audiovisual
     ADD CONSTRAINT fk_critica_audiovisual_contenido_audiovisual
     FOREIGN KEY (ID_contenido_audiovisual) REFERENCES contenido_audiovisual(ID_contenido_audiovisual)
-    ON DELETE RESTRICT ON UPDATE CASCADE;
+    ON DELETE CASCADE ON UPDATE CASCADE;
 -- FK CRITICA_VIDEOJUEGO a CRITICA
 ALTER TABLE critica_videojuego
     ADD CONSTRAINT fk_critica_videojuego_critica
@@ -218,12 +218,12 @@ ALTER TABLE critica_videojuego
 ALTER TABLE critica_videojuego
     ADD CONSTRAINT fk_critica_videojuego_aspecto
     FOREIGN KEY (ID_aspecto) REFERENCES aspecto(ID_aspecto)
-    ON DELETE RESTRICT ON UPDATE CASCADE;
+    ON DELETE CASCADE ON UPDATE CASCADE;
 -- FK CRITICA_VIDEOJUEGO a VIDEOJUEGO
 ALTER TABLE critica_videojuego
     ADD CONSTRAINT fk_critica_videojuego_videojuego
     FOREIGN KEY (ID_videojuego) REFERENCES videojuego(ID_videojuego)
-    ON DELETE RESTRICT ON UPDATE CASCADE;
+    ON DELETE CASCADE ON UPDATE CASCADE;
 -- FKs DE CONTENIDO_ETIQUETA
 ALTER TABLE contenido_etiqueta
     ADD CONSTRAINT fk_contenido_etiqueta_contenido

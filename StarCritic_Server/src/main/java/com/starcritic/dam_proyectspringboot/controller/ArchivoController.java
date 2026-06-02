@@ -35,7 +35,7 @@ public class ArchivoController {
     private Bucket resolverBucket(String bucket) {
         return switch (bucket) {
             case "certificaciones" -> Bucket.CERTIFICACIONES;
-            case "imagenes-usuario" -> Bucket.CONTENIDO_LOCAL;
+            case "contenido-local" -> Bucket.CONTENIDO_LOCAL;
             default -> throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Bucket desconocido: " + bucket);
         };
@@ -43,7 +43,7 @@ public class ArchivoController {
 
     /**
      * Subir un archivo al bucket indicado.
-     * @param bucket el bucket lógico ("certificaciones" o "imagenes-usuario").
+     * @param bucket el bucket lógico ("certificaciones" o "contenido-local").
      * @param archivo el fichero a subir (campo multipart "archivo").
      * @return la clave con la que el objeto queda almacenado.
      */
@@ -54,22 +54,8 @@ public class ArchivoController {
     }
 
     /**
-     * Generar una URL presignada de lectura para un objeto del bucket.
-     * @param bucket el bucket lógico ("certificaciones" o "imagenes-usuario").
-     * @param key la clave del objeto.
-     * @param minutos los minutos de validez de la URL (60 por defecto).
-     * @return la URL presignada.
-     */
-    @GetMapping(value = "/{bucket}/url", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String urlPresignada(@PathVariable String bucket,
-                               @RequestParam String key,
-                               @RequestParam(defaultValue = "60") int minutos) {
-        return r2Service.urlPresignada(resolverBucket(bucket), key, minutos);
-    }
-
-    /**
      * Descargar el contenido completo de un objeto del bucket.
-     * @param bucket el bucket lógico ("certificaciones" o "imagenes-usuario").
+     * @param bucket el bucket lógico ("certificaciones" o "contenido-local").
      * @param key la clave del objeto.
      * @return los bytes del objeto como flujo binario.
      */
@@ -84,7 +70,7 @@ public class ArchivoController {
 
     /**
      * Eliminar un objeto del bucket indicado.
-     * @param bucket el bucket lógico ("certificaciones" o "imagenes-usuario").
+     * @param bucket el bucket lógico ("certificaciones" o "contenido-local").
      * @param key la clave del objeto a eliminar.
      * @return 204 si la operación se completa.
      */

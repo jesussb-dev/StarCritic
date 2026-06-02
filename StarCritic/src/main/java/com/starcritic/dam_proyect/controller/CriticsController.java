@@ -34,11 +34,17 @@ public class CriticsController extends BaseController<CriticsDialog> {
     private  TipoContenido type;
     private  int idContenido;
     private  boolean esAudiovisual;
+    private  CompleteItemController parent;
 
     public CriticsController(CriticsDialog view, Model model, int idContenido, TipoContenido type) {
+        this(view, model, idContenido, type, null);
+    }
+
+    public CriticsController(CriticsDialog view, Model model, int idContenido, TipoContenido type, CompleteItemController parent) {
         super(view, model);
         this.idContenido = idContenido;
         this.type = type;
+        this.parent = parent;
         this.esAudiovisual = type.esAudiovisual();
         view.enableModifyButton(false);
         cargarAspectos();
@@ -182,6 +188,11 @@ public class CriticsController extends BaseController<CriticsDialog> {
                         } else {
                             view.setErrorText("Valoración: " + datos.getMedia());
                             datos.getItems().forEach(view::addCriticItem);
+                        }
+                        // Mantiene sincronizada la media general de la ficha de
+                        // detalle tras añadir o eliminar críticas.
+                        if (parent != null) {
+                            parent.refreshRating(idContenido);
                         }
                     },
                     err -> view.setErrorText("Error al cargar las críticas")

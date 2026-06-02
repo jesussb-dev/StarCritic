@@ -182,6 +182,7 @@ public class AdminContentController extends BaseController<AdminContentDialog> {
                         () -> AdminContenidoDB.actualizarDestacado(id, nuevoValor),
                         ok -> {
                             if (ok) {
+                                view.setOcultarButtonText("Ocultar");
                                 JOptionPane.showMessageDialog(view,
                                         nuevoValor ? "Contenido destacado correctamente." : "Contenido normalizado correctamente.",
                                         "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
@@ -214,6 +215,7 @@ public class AdminContentController extends BaseController<AdminContentDialog> {
                         () -> AdminContenidoDB.actualizarOculto(id, nuevoValor),
                         ok -> {
                             if (ok) {
+                                view.setDestacarButtonText("Destacar");
                                 JOptionPane.showMessageDialog(view,
                                         nuevoValor ? "Contenido ocultado correctamente." : "Contenido normalizado correctamente.",
                                         "Operación exitiosa", JOptionPane.INFORMATION_MESSAGE);
@@ -282,8 +284,7 @@ public class AdminContentController extends BaseController<AdminContentDialog> {
     }
 
     /**
-     * El póster LOCAL se almacena como clave de R2; se firma una URL temporal
-     * para poder mostrarlo. El póster externo (OMDb/RAWG) ya es una URL directa.
+     * El póster LOCAL se almacena como clave de R2.
      */
     private String resolvePosterUrl(Contenido c) {
         String posterKey = c.getPosterKey();
@@ -292,7 +293,7 @@ public class AdminContentController extends BaseController<AdminContentDialog> {
         }
         if (c.getOrigen() == Origen.LOCAL) {
             try {
-                return ArchivoApi.urlPresignada(ArchivoApi.Bucket.CONTENIDO_LOCAL, posterKey, 60);
+                return ArchivoApi.descargar(ArchivoApi.Bucket.CONTENIDO_LOCAL, posterKey);
             } catch (Exception ex) {
                 return null;
             }

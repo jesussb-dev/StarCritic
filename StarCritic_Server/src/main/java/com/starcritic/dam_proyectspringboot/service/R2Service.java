@@ -1,7 +1,6 @@
 package com.starcritic.dam_proyectspringboot.service;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,14 +12,12 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.presigner.S3Presigner;
-import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
 /**
  * Lógica de almacenamiento en Cloudflare R2 (API compatible con S3). Permite
- * subir, generar URLs presignadas y eliminar objetos en los buckets de
- * certificaciones y contenido local. Esta lógica vive solo en el servidor; el
- * cliente la consume vía REST.
+ * subir, descargar y eliminar objetos en los buckets de certificaciones y
+ * contenido local. Esta lógica vive solo en el servidor; el cliente la consume
+ * vía REST.
  * @author Jesús Santos Baquero
  */
 @Service
@@ -30,16 +27,14 @@ public class R2Service {
     public enum Bucket { CERTIFICACIONES, CONTENIDO_LOCAL }
 
     private final S3Client s3Client;
-    private final S3Presigner s3Presigner;
 
     @Value("${cloudflare.bucket.certificaciones}")
     private String bucketCertificaciones;
     @Value("${cloudflare.bucket.contenido-local}")
     private String bucketContenidoLocal;
 
-    public R2Service(S3Client s3Client, S3Presigner s3Presigner) {
+    public R2Service(S3Client s3Client) {
         this.s3Client = s3Client;
-        this.s3Presigner = s3Presigner;
     }
 
     private String nombreBucket(Bucket bucket) {
@@ -77,25 +72,6 @@ public class R2Service {
                     "No se pudo leer el archivo recibido", ex);
         }
         return key;
-    }
-
-    /**
-     * Generar una URL temporal (presignada) de lectura para un objeto.
-     * @param bucket el bucket lógico donde reside el objeto.
-     * @param key la clave del objeto.
-     * @param minutos los minutos de validez de la URL.
-     * @return la URL presignada como cadena.
-     */
-    public String urlPresignada(Bucket bucket, String key, int minutos) {
-        GetObjectRequest request = GetObjectRequest.builder()
-                .bucket(nombreBucket(bucket))
-                .key(key)
-                .build();
-        GetObjectPresignRequest presign = GetObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(minutos))
-                .getObjectRequest(request)
-                .build();
-        return s3Presigner.presignGetObject(presign).url().toString();
     }
 
     /**

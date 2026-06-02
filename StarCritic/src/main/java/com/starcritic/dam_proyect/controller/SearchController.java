@@ -1,6 +1,7 @@
 package com.starcritic.dam_proyect.controller;
 
 import com.starcritic.dam_proyect.data.BackgroundWork;
+import com.starcritic.dam_proyect.data.api.rest.ArchivoApi;
 import com.starcritic.dam_proyect.data.database.AdminContenidoDB;
 import com.starcritic.dam_proyect.model.Model;
 import com.starcritic.dam_proyect.model.pojo.api.OMDbListSearch;
@@ -227,11 +228,11 @@ public class SearchController extends BaseController<SearchDialog> {
 
     private void buildLocalItems(TipoContenido tipo, List<Contenido> catalogo, List<ItemContent> result) {
         if (actualPage == 1) {
-            ImageIcon defaultImage = new ImageIcon(getClass().getResource("/img/defaultPoster.png"));
             for (Contenido content : catalogo) {
                 if (content.getOrigen() == Origen.LOCAL && content.getTipoContenido() == tipo && !content.isOculto()) {
                     String label = buildLabel(content.getTitulo(), content.isDestacado());
-                    result.add(new ItemContent(label, defaultImage, String.valueOf(content.getIdContenido()), content.getOrigen()));
+                    result.add(new ItemContent(label, loadLocalImage(content.getPosterKey()),
+                            String.valueOf(content.getIdContenido()), content.getOrigen()));
                 }
             }
         }
@@ -267,9 +268,33 @@ public class SearchController extends BaseController<SearchDialog> {
             try {
                 return new ImageIcon(new URI(url).toURL());
             } catch (URISyntaxException | MalformedURLException ex) {
-                return new ImageIcon(getClass().getResource("/img/defaultPoster.png"));
+                return defaultImage();
             }
         }
+        return defaultImage();
+    }
+
+    /**
+     * Carga el póster de un contenido LOCAL. La clave se guarda en el bucket de
+     * R2 (contenido-local); el servidor sirve los bytes, se descargan a una
+     * carpeta temporal y la imagen se muestra desde el fichero resultante.
+     */
+    private ImageIcon loadLocalImage(String posterKey) {
+        if (posterKey == null || posterKey.isBlank()) {
+            return defaultImage();
+        }
+        try {
+            String uri = ArchivoApi.descargar(ArchivoApi.Bucket.CONTENIDO_LOCAL, posterKey);
+            if (uri != null) {
+                return new ImageIcon(new URI(uri).toURL());
+            }
+        } catch (Exception ex) {
+            return defaultImage();
+        }
+        return defaultImage();
+    }
+
+    private ImageIcon defaultImage() {
         return new ImageIcon(getClass().getResource("/img/defaultPoster.png"));
     }
 

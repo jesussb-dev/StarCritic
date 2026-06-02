@@ -211,10 +211,9 @@ public class ListsUserController extends BaseController<ListsUserDialog> {
                     BackgroundWork.run(
                             () -> {
                                 HashMap<Integer, String> contenidos = ListaContenidoDB.obtenerContenidoPorLista(model.getUser().getIdUsuario(), nombre);
-                                new JasperExport(nombre, row, contenidos, formato).exportList();
-                                return null;
+                                return new JasperExport(nombre, row, contenidos, formato).exportList();
                             },
-                            v -> JOptionPane.showMessageDialog(view, "Se ha exportado el archivo correctamente", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE),
+                            ruta -> JOptionPane.showMessageDialog(view, "Se ha exportado el archivo correctamente en:\n" + ruta, "Operación exitosa", JOptionPane.INFORMATION_MESSAGE),
                             err -> JOptionPane.showMessageDialog(view, "Error al exportar la lista", "Error", JOptionPane.ERROR_MESSAGE)
                     );
                 }

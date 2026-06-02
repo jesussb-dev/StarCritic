@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * Acceso al almacenamiento de archivos (Cloudflare R2) a través de la API REST
  * de StarCritic_Server. El cliente no maneja credenciales ni el SDK de R2: el
- * servidor centraliza la subida, la firma de URLs temporales y el borrado.
+ * servidor centraliza la subida, la descarga de bytes y el borrado.
  * @author Jesús Santos Baquero
  */
 public final class ArchivoApi {
@@ -34,18 +34,6 @@ public final class ArchivoApi {
      */
     public static String subir(File archivo, Bucket bucket, String contentType) {
         return ApiClient.get().postMultipart("/archivos/" + bucket.segmento, archivo, contentType);
-    }
-
-    /**
-     * Obtener una URL temporal (presignada) de lectura para un objeto.
-     * @param bucket el bucket donde reside el objeto.
-     * @param key la clave del objeto.
-     * @param minutos los minutos de validez de la URL.
-     * @return la URL presignada, o null si no se pudo obtener.
-     */
-    public static String urlPresignada(Bucket bucket, String key, int minutos) {
-        return ApiClient.get().getString("/archivos/" + bucket.segmento + "/url?key="
-                + ApiClient.enc(key) + "&minutos=" + minutos);
     }
 
     /**
@@ -82,5 +70,23 @@ public final class ArchivoApi {
             throw new RuntimeException("No se pudo descargar el archivo: " + key);
         }
         return archivoDestino;
+    }
+
+    /**
+     * Descargar un objeto a una carpeta temporal local y devolver la URI del
+     * fichero resultante (esquema {@code file:}). Usa el mismo mecanismo que la
+     * descarga de PDFs de certificaciones: los bytes los sirve el servidor y el
+     * cliente los guarda en local, de modo que el recurso puede cargarse con
+     * {@code new URI(...).toURL()} sin necesidad de URLs presignadas.
+     * @param bucket el bucket donde reside el objeto.
+     * @param key la clave del objeto.
+     * @return la URI del fichero descargado, o null si la clave es nula/vacía.
+     */
+    public static String descargar(Bucket bucket, String key) {
+        if (key == null || key.isBlank()) {
+            return null;
+        }
+        String carpetaTemporal = System.getProperty("java.io.tmpdir") + "/StarCritic/posters";
+        return descargar(bucket, key, carpetaTemporal).toURI().toString();
     }
 }

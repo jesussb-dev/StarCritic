@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Version=1.0
-Name=Mi App
-Comment=Descripción corta de la app
-Exec=java -jar /usr/share/miapp/miapp.jar
-Icon=/usr/share/miapp/miapp.png
-Terminal=false
-Categories=Utility;
