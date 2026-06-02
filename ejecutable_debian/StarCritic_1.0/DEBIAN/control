@@ -1,0 +1,9 @@
+Package: StarCritic
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: default-jre | java-runtime
+Maintainer: Jesús Santos <santosbaquerojesus@gmail.com>
+Description: App de reseñas de películas, series y videojuegos
+ App de reseñas por categoría de películas, sereis y videojuegos. Las criticas se realizarán por aspectos específicos
