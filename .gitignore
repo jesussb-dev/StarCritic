@@ -1,4 +1,5 @@
 target/
+StarCritic_Server/src/main/resources/application.properties
 *.class
 nbproject/private/
 build/
