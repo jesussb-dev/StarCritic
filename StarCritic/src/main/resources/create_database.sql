@@ -42,7 +42,8 @@ CREATE TABLE contenido(
     destacado       BOOLEAN      NOT NULL DEFAULT FALSE,
     oculto          BOOLEAN      NOT NULL DEFAULT FALSE,
     titulo          VARCHAR(255) NOT NULL,
-    sinopsis        VARCHAR(3000)NOT NULL,
+    -- TEXT (no VARCHAR) porque las descripciones de RAWG pueden superar 3000 caracteres
+    sinopsis        TEXT         NOT NULL,
     poster_key      VARCHAR(255) DEFAULT NULL,
     tipo_contenido  ENUM('PELICULA','SERIE','VIDEOJUEGO') NOT NULL,
     PRIMARY KEY (ID_contenido)
@@ -174,7 +175,7 @@ ALTER TABLE videojuego
 ALTER TABLE contenido_usuario
     ADD CONSTRAINT fk_contenido_usuario
     FOREIGN KEY (ID_usuario_registrado) REFERENCES usuario_registrado(ID_usuario_registrado)
-    ON DELETE RESTRICT ON UPDATE CASCADE;
+    ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE contenido_usuario
     ADD CONSTRAINT fk_usuario_contenido
     FOREIGN KEY (ID_contenido) REFERENCES contenido(ID_contenido)
@@ -376,9 +377,6 @@ INSERT INTO usuario_registrado (ID_usuario_registrado, nombre_usuario, correo_el
 -- -----------------------------------------------------------------
 -- CONTENIDO (supertipo): 15 audiovisuales + 10 videojuegos
 -- titulo/sinopsis/poster_key/tipo_contenido son NOT NULL para todo contenido
--- poster_key del contenido externo guarda la URL de imagen de la API de
--- origen: campo "Poster" de OMDb (audiovisual) o "background_image" de
--- RAWG (videojuegos). El contenido LOCAL lo deja vacio hasta subirlo a R2.
 -- -----------------------------------------------------------------
 INSERT INTO contenido (ID_contenido, fecha, origen, destacado, titulo, sinopsis, poster_key, tipo_contenido) VALUES
     (1,  '1994-09-23', 'OMDB', TRUE,  'The Shawshank Redemption',         'Andy Dufresne, condenado por un crimen que no cometio, mantiene la esperanza dentro de la prision de Shawshank.', 'https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg', 'PELICULA'),

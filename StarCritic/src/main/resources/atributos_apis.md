@@ -159,6 +159,21 @@ La respuesta tiene una estructura paginada:
 | `stores`             | array de objetos | Tiendas: `{ store: { id, name, slug } }`                                       |
 | `genres`             | array de objetos | Géneros: `{ id, name, slug }`                                                  |
 
+### 3.2 Detalle (`GET /api/games/{id}`)  →  `RAWGRepository.getGameDetails()`
+
+La ficha de detalle añade campos que **no** aparecen en la búsqueda. El más
+relevante para la aplicación es la sinopsis del juego:
+
+| Atributo            | Tipo   | Descripción                                                       |
+|---------------------|--------|-------------------------------------------------------------------|
+| `description`       | string | Sinopsis del juego en **HTML** (con etiquetas `<p>`)              |
+| `description_raw`   | string | Sinopsis del juego en **texto plano** (sin etiquetas)            |
+
+> Equivale al `Plot` de OMDb: se guarda en la columna `sinopsis` de `contenido`
+> y se muestra en la ficha de detalle. Se prefiere `description_raw` (texto
+> plano) frente a `description` (HTML). Puede superar los 3000 caracteres, por
+> lo que `sinopsis` se define como `TEXT`.
+
 > ⚠️ **Limitación importante — creadores/desarrolladores no disponibles.**
 > El endpoint de búsqueda `?search=` **no** devuelve los campos `developers`,
 > `publishers`, `creators` ni equivalentes. Verificado mediante una llamada

@@ -10,8 +10,7 @@ package com.starcritic.dam_proyect.exception;
  * @author Jesús Santos Baquero
  */
 public class ValidateEmail {
-    private final static String EMAIL_REGEX = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/";
-
+    private final static String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     /**
      * Comprobar que el email cumple el formato esperado.
      * @param email la dirección de correo a validar.

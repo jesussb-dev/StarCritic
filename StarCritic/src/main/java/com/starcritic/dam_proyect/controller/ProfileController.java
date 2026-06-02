@@ -9,16 +9,15 @@ import com.starcritic.dam_proyect.view.StatsDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
-/**
- * Controlador del diálogo de perfil del usuario. Permite consultar y modificar
- * los datos personales (nombre, correo, contraseña) y acceder a las estadisticas.
- * @author Jesús Santos Baquero
- */
 public class ProfileController extends BaseController<ProfileDialog> {
 
-    public ProfileController(ProfileDialog view, Model model) {
+    private final MainNavigationController parent;
+
+    public ProfileController(ProfileDialog view, Model model, MainNavigationController parent) {
         super(view, model);
+        this.parent = parent;
         loadProfileData();
         view.setFieldsEditable(false);
         view.setChangeUserButtonText("Configurar");
@@ -26,6 +25,7 @@ public class ProfileController extends BaseController<ProfileDialog> {
         view.setChangeUserButtonListener(changeUserButtonListener());
         view.setChangePasswordButtonListener(changePasswordButtonListener());
         view.setStatsButtonListener(goToStatsUserButtonActionListener());
+        view.setEliminarButtonListener(eliminarButtonListener());
     }
 
     private ActionListener cancelButtonListener() {
@@ -93,7 +93,7 @@ public class ProfileController extends BaseController<ProfileDialog> {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String password = JOptionPane.showInputDialog(view, "Introduzca su contraseña", "Cambiar contraseña", JOptionPane.INFORMATION_MESSAGE);
+                String password = promptPassword("Introduzca su contraseña", "Cambiar contraseña", JOptionPane.INFORMATION_MESSAGE);
                 if (password == null) {
                     return;
                 }
@@ -104,7 +104,7 @@ public class ProfileController extends BaseController<ProfileDialog> {
                                 JOptionPane.showMessageDialog(view, "Error: la contraseña no es correcta", "Error de verificación", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
-                            String newPassword = JOptionPane.showInputDialog(view, "Introduzca su nueva contraseña", "Cambiar contraseña", JOptionPane.INFORMATION_MESSAGE);
+                            String newPassword = promptPassword("Introduzca su nueva contraseña", "Cambiar contraseña", JOptionPane.INFORMATION_MESSAGE);
                             if (newPassword == null) {
                                 return;
                             }
@@ -127,6 +127,57 @@ public class ProfileController extends BaseController<ProfileDialog> {
             }
         };
         return al;
+    }
+
+    private ActionListener eliminarButtonListener() {
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String password = promptPassword("Introduzca su contraseña", "Eliminar usuario", JOptionPane.WARNING_MESSAGE);
+                if (password == null) {
+                    return;
+                }
+                BackgroundWork.run(
+                        () -> UsuarioDB.verificarContrasenha(model.getUser().getIdUsuario(), password),
+                        valid -> {
+                            if (!valid) {
+                                JOptionPane.showMessageDialog(view, "Error: la contraseña no es correcta", "Error de verificación", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            int confirm = JOptionPane.showConfirmDialog(view, "¿Está seguro de que desea eliminar su cuenta? Esta acción no se puede deshacer.", "Eliminar usuario", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                            if (confirm != JOptionPane.YES_OPTION) {
+                                return;
+                            }
+                            BackgroundWork.run(
+                                    () -> UsuarioDB.eliminarUsuario(model.getUser().getIdUsuario()),
+                                    ok -> {
+                                        if (ok) {
+                                            JOptionPane.showMessageDialog(view, "Cuenta eliminada correctamente", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                            parent.logOut();
+                                            view.dispose();
+                                        } else {
+                                            JOptionPane.showMessageDialog(view, "Error: no se ha podido eliminar la cuenta", "Error de eliminación", JOptionPane.ERROR_MESSAGE);
+                                        }
+                                    },
+                                    err -> JOptionPane.showMessageDialog(view, "Error de conexión",
+                                            "Error", JOptionPane.ERROR_MESSAGE)
+                            );
+                        },
+                        err -> JOptionPane.showMessageDialog(view, "Error de conexión",
+                                "Error", JOptionPane.ERROR_MESSAGE)
+                );
+            }
+        };
+        return al;
+    }
+
+    private String promptPassword(String message, String title, int messageType) {
+        JPasswordField passwordField = new JPasswordField();
+        int option = JOptionPane.showConfirmDialog(view, new Object[]{message, passwordField}, title, JOptionPane.OK_CANCEL_OPTION, messageType);
+        if (option != JOptionPane.OK_OPTION) {
+            return null;
+        }
+        return new String(passwordField.getPassword());
     }
 
     private void loadProfileData() {

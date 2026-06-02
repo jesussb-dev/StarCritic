@@ -1,6 +1,7 @@
 package com.starcritic.dam_proyect.controller;
 
 import com.starcritic.dam_proyect.data.BackgroundWork;
+import com.starcritic.dam_proyect.data.api.rest.ArchivoApi;
 import com.starcritic.dam_proyect.data.database.AdminContenidoDB;
 import com.starcritic.dam_proyect.model.Model;
 import com.starcritic.dam_proyect.model.pojo.bd.Contenido;
@@ -277,7 +278,26 @@ public class AdminContentController extends BaseController<AdminContentDialog> {
     private ItemContent buildItemContent(Contenido c) {
         String label = c.getTitulo() + "  [" + c.getTipoContenido() + " · " + c.getOrigen() + "]"
                 + (c.isOculto() ? "  (oculto)" : "") + (c.isDestacado() ? "  ★" : "");
-        return new ItemContent(label, loadPoster(c.getPosterKey()), String.valueOf(c.getIdContenido()), c.getOrigen());
+        return new ItemContent(label, loadPoster(resolvePosterUrl(c)), String.valueOf(c.getIdContenido()), c.getOrigen());
+    }
+
+    /**
+     * El póster LOCAL se almacena como clave de R2; se firma una URL temporal
+     * para poder mostrarlo. El póster externo (OMDb/RAWG) ya es una URL directa.
+     */
+    private String resolvePosterUrl(Contenido c) {
+        String posterKey = c.getPosterKey();
+        if (posterKey == null || posterKey.isBlank()) {
+            return null;
+        }
+        if (c.getOrigen() == Origen.LOCAL) {
+            try {
+                return ArchivoApi.urlPresignada(ArchivoApi.Bucket.CONTENIDO_LOCAL, posterKey, 60);
+            } catch (Exception ex) {
+                return null;
+            }
+        }
+        return posterKey;
     }
 
     private ImageIcon loadPoster(String url) {

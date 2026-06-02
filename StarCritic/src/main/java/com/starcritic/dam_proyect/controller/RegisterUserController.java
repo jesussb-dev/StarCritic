@@ -61,7 +61,7 @@ public class RegisterUserController extends BaseController<RegisterDialog> {
                                 JOptionPane.showMessageDialog(view, "Se ha creado el usuario correctamente", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 view.dispose();
                             } else {
-                                JOptionPane.showMessageDialog(view, "Error al crear el usuario. Posibles causas: usuario o correo ya existente o email mal forzfa", "Error", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(view, "Error al crear el usuario. Posibles causas: usuario o correo ya existente", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         },
                         err -> JOptionPane.showMessageDialog(view, "Error al crear el usuario", "Error", JOptionPane.ERROR_MESSAGE)

@@ -31,8 +31,9 @@ import javax.swing.JOptionPane;
 
 /**
  * Controlador de la vista principal de búsqueda. Permite buscar películas,
- * series y videojuegos combinando resultados de OMDb/RAWG con el catálogo
- * local del backend, y abrir el detalle de cada contenido.
+ * series y videojuegos combinando resultados de OMDb/RAWG con el catálogo local
+ * del backend, y abrir el detalle de cada contenido.
+ *
  * @author Jesús Santos Baquero
  */
 public class SearchController extends BaseController<SearchDialog> {
@@ -81,7 +82,7 @@ public class SearchController extends BaseController<SearchDialog> {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (actualPage >= totalpages) {
-                    JOptionPane.showMessageDialog(view, "Error de página", "Error: esta es la última página", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(view, "Error: esta es la última página", "Error de página", JOptionPane.ERROR_MESSAGE);
                 } else {
                     actualPage++;
                     view.clearList();
@@ -98,7 +99,7 @@ public class SearchController extends BaseController<SearchDialog> {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (actualPage <= 1) {
-                    JOptionPane.showMessageDialog(view, "Error de página", "Error: esta es la primera página", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(view, "Error: esta es la primera página.", "Error de página", JOptionPane.ERROR_MESSAGE);
                 } else {
                     actualPage--;
                     view.clearList();
@@ -225,11 +226,13 @@ public class SearchController extends BaseController<SearchDialog> {
     }
 
     private void buildLocalItems(TipoContenido tipo, List<Contenido> catalogo, List<ItemContent> result) {
-        ImageIcon defaultImage = new ImageIcon(getClass().getResource("/img/defaultPoster.png"));
-        for (Contenido content : catalogo) {
-            if (content.getOrigen() == Origen.LOCAL && content.getTipoContenido() == tipo && !content.isOculto()) {
-                String label = buildLabel(content.getTitulo(), content.isDestacado());
-                result.add(new ItemContent(label, defaultImage, String.valueOf(content.getIdContenido()), content.getOrigen()));
+        if (actualPage == 1) {
+            ImageIcon defaultImage = new ImageIcon(getClass().getResource("/img/defaultPoster.png"));
+            for (Contenido content : catalogo) {
+                if (content.getOrigen() == Origen.LOCAL && content.getTipoContenido() == tipo && !content.isOculto()) {
+                    String label = buildLabel(content.getTitulo(), content.isDestacado());
+                    result.add(new ItemContent(label, defaultImage, String.valueOf(content.getIdContenido()), content.getOrigen()));
+                }
             }
         }
     }

@@ -44,8 +44,9 @@ public class ProfileDialog extends javax.swing.JDialog {
 
         UIStyle.stylePrimaryButton(changeUserButton);
         UIStyle.styleSecondaryButton(statsButton);
-        UIStyle.styleSecondaryButton(jButton1);
+        UIStyle.styleSecondaryButton(changePasswordButton);
         UIStyle.styleDangerButton(cancelButton);
+        UIStyle.styleDangerButton(eliminarButton);
         setTitle("Star Critic — Mi perfil");
     }
 
@@ -67,9 +68,10 @@ public class ProfileDialog extends javax.swing.JDialog {
         nameTextField = new javax.swing.JTextField();
         addressTextField = new javax.swing.JTextField();
         cancelButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        changePasswordButton = new javax.swing.JButton();
         statsButton = new javax.swing.JButton();
         resultLabel = new javax.swing.JLabel();
+        eliminarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -91,45 +93,46 @@ public class ProfileDialog extends javax.swing.JDialog {
 
         cancelButton.setText("Cancelar");
 
-        jButton1.setText("Cambiar contraseña");
+        changePasswordButton.setText("Cambiar contraseña");
 
         statsButton.setText("Mis estadísticas...");
 
         resultLabel.setText("");
+
+        eliminarButton.setText("Eliminar usuario");
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                        .addComponent(eliminarButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addComponent(changePasswordButton)
+                        .addGap(18, 18, 18)
                         .addComponent(statsButton)
                         .addGap(18, 18, 18)
                         .addComponent(changeUserButton)
                         .addGap(18, 18, 18)
                         .addComponent(cancelButton))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                .addComponent(resultLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                .addComponent(addressLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(addressTextField))
-                            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                .addComponent(nameLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(nameTextField))
-                            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                                .addComponent(userLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(userTextField)))))
+                        .addComponent(resultLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(addressLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(addressTextField))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(nameLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(nameTextField))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(userLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(userTextField)))
                 .addContainerGap())
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -153,8 +156,9 @@ public class ProfileDialog extends javax.swing.JDialog {
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(changeUserButton)
                     .addComponent(cancelButton)
-                    .addComponent(jButton1)
-                    .addComponent(statsButton))
+                    .addComponent(changePasswordButton)
+                    .addComponent(statsButton)
+                    .addComponent(eliminarButton))
                 .addContainerGap())
         );
 
@@ -179,10 +183,13 @@ public class ProfileDialog extends javax.swing.JDialog {
         this.changeUserButton.addActionListener(al);
     }
     public void setChangePasswordButtonListener(ActionListener al){
-        this.jButton1.addActionListener(al);
+        this.changePasswordButton.addActionListener(al);
     }
     public void setStatsButtonListener(ActionListener al){
         this.statsButton.addActionListener(al);
+    }
+    public void setEliminarButtonListener(ActionListener al){
+        this.eliminarButton.addActionListener(al);
     }
     
     public String getButtonConfigurarText(){
@@ -223,8 +230,9 @@ public class ProfileDialog extends javax.swing.JDialog {
     private javax.swing.JTextField addressTextField;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JButton changePasswordButton;
     private javax.swing.JButton changeUserButton;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton eliminarButton;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JLabel resultLabel;

@@ -16,6 +16,9 @@ public class RAWGNormalJson {
     private double rating;
     private Integer metacritic;
     private Integer playtime;
+    private String description;
+    @JsonProperty("description_raw")
+    private String descriptionRaw;
     private List<RAWGNameRef> genres;
     private List<RAWGPlatformWrapper> platforms;
     private List<RAWGNameRef> tags;
@@ -28,6 +31,8 @@ public class RAWGNormalJson {
     public double getRating()                   { return rating; }
     public Integer getMetacritic()              { return metacritic; }
     public Integer getPlaytime()                { return playtime; }
+    public String getDescription()              { return description; }
+    public String getDescriptionRaw()           { return descriptionRaw; }
     public List<RAWGNameRef> getGenres()        { return genres; }
     public List<RAWGPlatformWrapper> getPlatforms() { return platforms; }
     public List<RAWGNameRef> getTags()          { return tags; }

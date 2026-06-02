@@ -12,9 +12,7 @@ import com.starcritic.dam_proyect.view.CriticsDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -81,12 +79,9 @@ public class UserCriticsController extends BaseController<CriticsDialog> {
                                             CriticaDB.eliminarCritica(idCritica);
                                             return null;
                                         },
-                                        v -> {
-                                            JOptionPane.showMessageDialog(view, "Se ha borrado correctamente la crítica", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-                                            view.clearCriticas();
-                                            BackgroundWork.runVoid(() -> cargarCriticasDelAspectoSeleccionado(), ex -> JOptionPane.showMessageDialog(view, "Error al eliminar la crítica", "Error", JOptionPane.ERROR_MESSAGE));
-                                        }, 
-                                        err -> JOptionPane.showMessageDialog(view, "Error al eliminar la crítica", "Error", JOptionPane.ERROR_MESSAGE));
+                                        v -> JOptionPane.showMessageDialog(view, "Se ha borrado correctamente la crítica", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE),
+                                        err -> JOptionPane.showMessageDialog(view, "Error al eliminar la crítica", "Error", JOptionPane.ERROR_MESSAGE)
+                                );
                             }
                         },
                         err -> JOptionPane.showMessageDialog(view, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE)
@@ -98,11 +93,7 @@ public class UserCriticsController extends BaseController<CriticsDialog> {
 
     private void cargarAspectos() {
         BackgroundWork.run(
-                () -> {
-                    Set<Aspecto> aspectos = new LinkedHashSet<>(AspectoDB.obtenerAspectosAudiovisual());
-                    aspectos.addAll(AspectoDB.obtenerAspectosVideojuego());
-                    return new ArrayList<>(aspectos);
-                },
+                () -> AspectoDB.obtenerTodosLosAspectos(),
                 aspectos -> aspectos.forEach(view::addAspectItem),
                 err -> JOptionPane.showMessageDialog(view, "Error al añadir el contenido a la lista", "Error", JOptionPane.ERROR_MESSAGE));
 

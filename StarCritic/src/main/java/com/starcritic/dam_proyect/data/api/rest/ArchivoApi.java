@@ -13,7 +13,7 @@ public final class ArchivoApi {
     /** Bucket lógico, mapeado al segmento de ruta del endpoint del servidor. */
     public enum Bucket {
         CERTIFICACIONES("certificaciones"),
-        CONTENIDO_LOCAL("imagenes-usuario");
+        CONTENIDO_LOCAL("contenido-local");
 
         private final String segmento;
 
@@ -22,7 +22,8 @@ public final class ArchivoApi {
         }
     }
 
-
+    private ArchivoApi() {
+    }
 
     /**
      * Subir un archivo al bucket indicado.

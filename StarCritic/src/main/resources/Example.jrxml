@@ -64,18 +64,18 @@ ORDER BY c.ID_contenido;]]>
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="553" height="95" backcolor="#000000" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
 				<staticText>
-					<reportElement style="Title" x="70" y="10" width="370" height="66" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
+					<reportElement style="Title" x="110" y="0" width="370" height="66" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
 					<textElement>
-						<font isBold="false"/>
+						<font fontName="Liberation Serif" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Lista exportada]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="SubTitle" x="157" y="66" width="249" height="29" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
+					<reportElement style="SubTitle" x="226" y="60" width="249" height="29" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
 					<textElement>
-						<font size="22" isBold="false"/>
+						<font fontName="Liberation Serif" size="22" isBold="false"/>
 					</textElement>
-					<text><![CDATA[]]></text>
+					<text><![CDATA[StarCritic]]></text>
 				</staticText>
 			</frame>
 			<frame>
@@ -100,7 +100,7 @@ ORDER BY c.ID_contenido;]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6872739-650c-455b-8eb1-66d072169594"/>
 				</reportElement>
 				<textElement>
-					<font isBold="false"/>
+					<font fontName="Liberation Serif" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ID_contenido]]></text>
 			</staticText>
@@ -109,7 +109,7 @@ ORDER BY c.ID_contenido;]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aa11bb22-cc33-dd44-ee55-ff6677889900"/>
 				</reportElement>
 				<textElement>
-					<font isBold="false"/>
+					<font fontName="Liberation Serif" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
@@ -118,16 +118,16 @@ ORDER BY c.ID_contenido;]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="346f1da0-a191-42cb-a508-09346c379166"/>
 				</reportElement>
 				<textElement>
-					<font isBold="false"/>
+					<font fontName="Liberation Serif" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ID_Api]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="420" y="7" width="135" height="18" forecolor="#000000" uuid="37544e4e-2b00-4041-9e00-a9be0b3b82f2">
+				<reportElement style="Column header" x="430" y="7" width="135" height="18" forecolor="#000000" uuid="37544e4e-2b00-4041-9e00-a9be0b3b82f2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f7d655ad-75a7-4665-b477-42ba91ed524a"/>
 				</reportElement>
 				<textElement>
-					<font isBold="false"/>
+					<font fontName="Liberation Serif" isBold="false"/>
 				</textElement>
 				<text><![CDATA[tipo]]></text>
 			</staticText>
@@ -142,7 +142,7 @@ ORDER BY c.ID_contenido;]]>
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6872739-650c-455b-8eb1-66d072169594"/>
 					</reportElement>
 					<textElement>
-						<font size="14"/>
+						<font fontName="Liberation Serif" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ID_contenido}]]></textFieldExpression>
 				</textField>
@@ -151,7 +151,7 @@ ORDER BY c.ID_contenido;]]>
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aa11bb22-cc33-dd44-ee55-ff6677889900"/>
 					</reportElement>
 					<textElement>
-						<font size="14"/>
+						<font fontName="Liberation Serif" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
 				</textField>
@@ -160,7 +160,7 @@ ORDER BY c.ID_contenido;]]>
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="346f1da0-a191-42cb-a508-09346c379166"/>
 					</reportElement>
 					<textElement>
-						<font size="14"/>
+						<font fontName="Liberation Serif" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ID_Api}]]></textFieldExpression>
 				</textField>
@@ -169,7 +169,7 @@ ORDER BY c.ID_contenido;]]>
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f7d655ad-75a7-4665-b477-42ba91ed524a"/>
 					</reportElement>
 					<textElement>
-						<font size="14"/>
+						<font fontName="Liberation Serif" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
 				</textField>
@@ -193,21 +193,21 @@ ORDER BY c.ID_contenido;]]>
 				<textField evaluationTime="Report">
 					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="4834e99c-7f6c-485a-b098-50e5187f2ab4"/>
 					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
+						<font fontName="Liberation Serif" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="9825b46e-76f1-469a-abb8-a1cc27aad685"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
+						<font fontName="Liberation Serif" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="137d38c7-1a83-4fc5-b156-9d5f1b1a0ddc"/>
 					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
+						<font fontName="Liberation Serif" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>

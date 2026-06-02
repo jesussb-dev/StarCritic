@@ -1,5 +1,6 @@
 package com.starcritic.dam_proyectspringboot.model.bd;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,6 +30,7 @@ public class Contenido {
     private boolean destacado = false;
     private boolean oculto = false;
     private String titulo;
+    @Column(columnDefinition = "TEXT")
     private String sinopsis;
     private String posterKey;
     @Enumerated(EnumType.STRING)

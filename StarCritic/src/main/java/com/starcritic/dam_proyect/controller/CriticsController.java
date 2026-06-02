@@ -140,7 +140,10 @@ public class CriticsController extends BaseController<CriticsDialog> {
                         CriticaDB.eliminarCritica(idCritica);
                         return null;
                     },
-                    v -> JOptionPane.showMessageDialog(view, "Se ha borrado correctamente la crítica", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE),
+                    v -> {
+                        cargarCriticasDelAspectoSeleccionado();
+                        JOptionPane.showMessageDialog(view, "Se ha borrado correctamente la crítica", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    },
                     err -> JOptionPane.showMessageDialog(view, "Error al eliminar la crítica", "Error", JOptionPane.ERROR_MESSAGE)
             );
         }
@@ -155,7 +158,7 @@ public class CriticsController extends BaseController<CriticsDialog> {
         view.clearCriticas();
         Aspecto aspecto = view.getSelectedAspect();
         if (aspecto != null) {
-            view.enableModifyButton(true);
+            if(model.getUser() != null) view.enableModifyButton(true);
             int idAspecto = aspecto.getIdAspecto();
             BackgroundWork.run(
                     () -> {

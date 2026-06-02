@@ -165,8 +165,7 @@ public class CompleteItemController extends BaseController<CompleteItemDialog> {
                             String tags = "";
                             double media = 0;
                             if (hasUser) {
-                                ContenidoAudiovisual contenido = new ContenidoAudiovisual(
-                                        LocalDate.now(), false, false,
+                                ContenidoAudiovisual contenido = new ContenidoAudiovisual(LocalDate.now(), false, false,
                                         item.getTitle(), item.getPlot(), item.getPoster(), type, id);
                                 ContenidoDB.registrarContenido(contenido);
                             }
@@ -190,10 +189,11 @@ public class CompleteItemController extends BaseController<CompleteItemDialog> {
                             boolean hasUser = model.getUser() != null;
                             String tags = "";
                             double media = 0;
+                            String descripcion = resolveDescription(item);
                             if (hasUser) {
                                 Videojuego juego = new Videojuego(
                                         LocalDate.now(), false, false,
-                                        item.getName(), "", item.getBackgroundImage(), Integer.parseInt(id));
+                                        item.getName(), descripcion, item.getBackgroundImage(), Integer.parseInt(id));
                                 ContenidoDB.registrarContenido(juego);
                             }
                             int idC = ContenidoDB.buscarID(id, type);
@@ -204,8 +204,8 @@ public class CompleteItemController extends BaseController<CompleteItemDialog> {
                                 tags = buildTagsString(idC);
                                 media = ContenidoDB.mediaAspectoContenido(idC, 1, type);
                             }
-                            data = new ContentData(item.getBackgroundImage(), item.getName() != null ? item.getName() : "", "Valoración: " + media, formatNames("Géneros", item.getGenres()),
-                                    formatPlatforms(item.getPlatforms()), tags, hasUser);
+                            data = new ContentData(item.getBackgroundImage(), item.getName() != null ? item.getName() : "", "Valoración: " + media,
+                                    formatGenresAndPlatforms(item), descripcion, tags, hasUser);
                         }
                         return data;
                     }
@@ -289,6 +289,37 @@ public class CompleteItemController extends BaseController<CompleteItemDialog> {
         ContenidoUsuario visita = new ContenidoUsuario(model.getUser().getIdUsuario(), LocalDate.now(), 1);
         visita.setIdContenido(idContenido);
         ContenidoUsuarioDB.crearContenidoUsuario(visita);
+    }
+
+    /**
+     * Sinopsis del videojuego a partir del detalle de RAWG. Se prefiere el texto
+     * plano ({@code description_raw}); si no está, se usa la versión HTML; si no
+     * hay ninguna, una cadena vacía (la sinopsis es obligatoria en BD).
+     */
+    private String resolveDescription(RAWGNormalJson item) {
+        if (item.getDescriptionRaw() != null && !item.getDescriptionRaw().isBlank()) {
+            return item.getDescriptionRaw();
+        }
+        if (item.getDescription() != null && !item.getDescription().isBlank()) {
+            return item.getDescription();
+        }
+        return "";
+    }
+
+    /**
+     * Línea de metadatos de un videojuego (géneros y plataformas), equivalente a
+     * la línea de géneros que se muestra para películas y series.
+     */
+    private String formatGenresAndPlatforms(RAWGNormalJson item) {
+        String generos = formatNames("Géneros", item.getGenres());
+        String plataformas = formatPlatforms(item.getPlatforms());
+        if (generos.isEmpty()) {
+            return plataformas;
+        }
+        if (plataformas.isEmpty()) {
+            return generos;
+        }
+        return generos + "  ·  " + plataformas;
     }
 
     private String formatNames(String prefix, List<RAWGNameRef> items) {
